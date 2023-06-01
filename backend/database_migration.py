@@ -1,6 +1,4 @@
-from main import app
-from db import db
+from backend.model.base import Base
+from database_config import engine
 
-with app.app_context():
-    db.create_all()
-
+Base.metadata.create_all(engine)

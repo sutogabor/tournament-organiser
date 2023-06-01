@@ -1,11 +1,13 @@
 from sqlalchemy import Column, Integer, String, Date
-from backend.db import db
+from sqlalchemy.ext.declarative import declarative_base
+
+Base = declarative_base()
 
 
-class Event(db.Model):
+class Event(Base):
     __tablename__ = "events"
     id = Column(Integer, primary_key=True)
-    name = Column(String)
+    name = Column(String(255))
     date = Column(Date)
     # players = relationship("Player", back_populates="events")
 
