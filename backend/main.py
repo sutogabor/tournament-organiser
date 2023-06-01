@@ -7,7 +7,7 @@ app.debug = True
 
 
 # adding configuration for using a sqlite database
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = ''
 
 # Creating an SQLAlchemy instance
 db = SQLAlchemy(app)

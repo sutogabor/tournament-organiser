@@ -1,11 +1,4 @@
-from sqlalchemy import column, Integer, String, ForeignKey
-from sqlalchemy.orm import relationship
-from ..database_handler import base
+from sqlalchemy import Column, Integer, String, ForeignKey
+from flask_sqlalchemy import SQLAlchemy
 
-
-class Player(base):
-    __tablename__ = "players"
-    id = mapped_column(Integer, primary_key=True)
-    name = column(String)
-    event_id = column(Integer, ForeignKey("event.id"))
-    event = relationship("Event", back_populates="players")
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///player.sqlite'
