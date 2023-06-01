@@ -1,5 +1,6 @@
-from flask import Flask, request, redirect
-from flask_sqlalchemy import SQLAlchemy
+from flask import Flask
+from database_config import db_name
+from db import db
 
 
 app = Flask(__name__)
@@ -7,11 +8,15 @@ app.debug = True
 
 
 # adding configuration for using a sqlite database
-app.config['SQLALCHEMY_DATABASE_URI'] = ''
+app.config['SQLALCHEMY_DATABASE_URI'] = db_name
 
-# Creating an SQLAlchemy instance
-db = SQLAlchemy(app)
+db.init_app(app)
 
 
 if __name__ == "__main__":
-    app.run()
+    app.run(
+        debug=True,
+        host='localhost',
+        port=5555
+    )
+
