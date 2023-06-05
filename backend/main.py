@@ -7,7 +7,7 @@ app.debug = True
 
 
 # adding configuration for using a sqlite database
-app.config['SQLALCHEMY_DATABASE_URI'] = ''
+app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://<username>:<password>@localhost/<database_name>"
 
 # Creating an SQLAlchemy instance
 db = SQLAlchemy(app)
