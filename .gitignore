@@ -1,3 +1,6 @@
 backend/.venv
 .idea
 backend/database_config.py
+backend/__pycache__/
+
+
