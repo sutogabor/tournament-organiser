@@ -1,14 +1,15 @@
 from flask import Flask
 from database_config import db_name
-from db import db
+from flask_sqlalchemy import SQLAlchemy
 
 
 app = Flask(__name__)
-app.debug = True
 
 
 # adding configuration for using a sqlite database
 app.config['SQLALCHEMY_DATABASE_URI'] = db_name
+
+db = SQLAlchemy()
 
 db.init_app(app)
 
