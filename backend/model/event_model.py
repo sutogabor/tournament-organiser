@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Integer, String, Date
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import declarative_base
 
 Base = declarative_base()
 
@@ -10,4 +10,6 @@ class Event(Base):
     name = Column(String(255))
     date = Column(Date)
     # players = relationship("Player", back_populates="events")
+
+
 
