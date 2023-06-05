@@ -3,5 +3,9 @@ from sqlalchemy.orm import declarative_base
 
 Base = declarative_base()
 
-Base.metadata.create_all(engine)
+try:
+    Base.metadata.create_all(engine)
+    print("Tables created successfully.")
+except Exception as e:
+    print("Error occurred:", e)
 
