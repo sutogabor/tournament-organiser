@@ -1,0 +1,6 @@
+from database_config import engine
+from sqlalchemy.orm import declarative_base
+
+Base = declarative_base()
+
+Base.metadata.create_all(bind=engine)
