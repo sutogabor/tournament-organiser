@@ -38,7 +38,7 @@ def add_event():
 
 @app.route('/event/delete/<int:event_id>', methods=['POST'])
 def delete_event(event_id):
-    event = model.Event.query.get(event_id)
+    event = db.session.query(model.Event).get(event_id)
     if not event:
         return jsonify({'message': 'Event not found.'}), 404
     db.session.delete(event)
