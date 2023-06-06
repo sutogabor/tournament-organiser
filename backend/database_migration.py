@@ -1,11 +1,5 @@
 from database_config import engine
-from sqlalchemy.orm import declarative_base
+from model.model import Base
 
-Base = declarative_base()
 
-try:
-    Base.metadata.create_all(engine)
-    print("Tables created successfully.")
-except Exception as e:
-    print("Error occurred:", e)
-
+Base.metadata.create_all(bind=engine)
