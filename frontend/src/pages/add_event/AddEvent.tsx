@@ -29,7 +29,7 @@ function AddEvent() {
 
   return (
     <div>
-      <form onSubmit={handleSubmit} action='http://localhost:5000/event/add' method="post">
+      <form onSubmit={handleSubmit}>
         <input
           type="text"
           value={name}

@@ -6,7 +6,7 @@ from flask_cors import CORS
 
 
 app = Flask(__name__)
-CORS(app)  # Enable CORS for all routes
+CORS(app, origins='http://localhost:5174', allow_headers=['Content-Type'])  # Enable CORS for all routes
 
 
 # adding configuration for using a sqlite database
