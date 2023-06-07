@@ -37,7 +37,7 @@ function AddEvent() {
           placeholder="Your Event name"
         />
         <input
-          type="date"
+          type="datetime-local"
           value={date}
           onChange={(e) => setDate(e.target.value)}
         />
