@@ -2,7 +2,11 @@ from flask import Flask, jsonify, request
 from database_config import db_name
 from flask_sqlalchemy import SQLAlchemy
 import model
+from flask_cors import CORS
+
+
 app = Flask(__name__)
+CORS(app)  # Enable CORS for all routes
 
 
 # adding configuration for using a sqlite database
