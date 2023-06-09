@@ -9,13 +9,28 @@ function EventsList() {
 
     async function getData()  {
         const response = await fetch('http://localhost:5000/event');
-        
         return response.json();
     }
+
     
-    function deleteEvent(eventId:number) {
-        return "ok"
+    async function deleteEvent(eventId:number) {  
+    try {
+      const response = await fetch(`http://localhost:5000/event/delete/${eventId}`, {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      if (response.ok) {
+        console.log("Event deleted successfully.");
+      } else {
+        console.error("Cannot delete this event.");
+      }
+    } catch (error) {
+      console.error(error);
     }
+  }
+    
 
     useEffect (()=> {
         getData().then(
@@ -27,6 +42,9 @@ function EventsList() {
 
     },[])
     
+    if(events.length == 0) {
+        return "LOOOOOOAAAADDDIIIING";
+    } 
 
     return (
             <div>
@@ -41,7 +59,7 @@ function EventsList() {
                             </div>
                             
                             <div className="card-footer">
-                            <button>Delete</button>
+                            <input type='button' onClick={() => deleteEvent(event.id)} value="Delete" />
                             </div>
                         </div>
                     ))}
