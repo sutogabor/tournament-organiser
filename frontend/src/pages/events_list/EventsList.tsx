@@ -12,7 +12,7 @@ function EventsList() {
         return response.json();
     }
 
-    function fetchData() {
+    function refreshData() {
       getData().then(
         (data) => {
             setEvents(data);
@@ -32,7 +32,7 @@ function EventsList() {
       })
       if (response.ok) {
         console.log("Event deleted successfully.");
-        fetchData();
+        refreshData();
       } else {
         console.error("Cannot delete this event.");
       }
@@ -43,7 +43,7 @@ function EventsList() {
     
 
     useEffect (()=> {
-        fetchData();
+        refreshData();
     },[])
     
     if(events.length == 0) {
