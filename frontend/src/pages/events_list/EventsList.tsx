@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 function EventsList() {
 
     const [events, setEvents] = useState([]);
+    const [refresh, setRefresh] = useState(false);
 
 
     async function getData()  {
@@ -32,7 +33,7 @@ function EventsList() {
       })
       if (response.ok) {
         console.log("Event deleted successfully.");
-        refreshData();
+        setRefresh(true);
       } else {
         console.error("Cannot delete this event.");
       }
@@ -44,7 +45,8 @@ function EventsList() {
 
     useEffect (()=> {
         refreshData();
-    },[])
+        setRefresh(false);
+    },[refresh])
     
     if(events.length == 0) {
         return "LOOOOOOAAAADDDIIIING";
