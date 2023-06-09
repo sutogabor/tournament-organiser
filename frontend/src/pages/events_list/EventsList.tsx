@@ -12,6 +12,15 @@ function EventsList() {
         return response.json();
     }
 
+    function fetchData() {
+      getData().then(
+        (data) => {
+            setEvents(data);
+            console.log(events);
+        }
+        )
+    }
+
     
     async function deleteEvent(eventId:number) {  
     try {
@@ -23,6 +32,7 @@ function EventsList() {
       })
       if (response.ok) {
         console.log("Event deleted successfully.");
+        fetchData();
       } else {
         console.error("Cannot delete this event.");
       }
@@ -33,13 +43,7 @@ function EventsList() {
     
 
     useEffect (()=> {
-        getData().then(
-            (data) => {
-                setEvents(data);
-                console.log(events);
-            }
-            )
-
+        fetchData();
     },[])
     
     if(events.length == 0) {
