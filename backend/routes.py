@@ -1,13 +1,6 @@
-from flask import Flask, jsonify, request
-from database_config import db_name
-from flask_sqlalchemy import SQLAlchemy
+from flask import jsonify, request
 import model
-from main import bp
-
-
-db = SQLAlchemy()
-
-db.init_app(bp)
+from main import bp, db
 
 
 @bp.route("/event", methods=['GET'])
@@ -54,3 +47,16 @@ def get_event(event_id):
         'date': event.date.strftime('%Y-%m-%d')
     }
     return jsonify(event_data)
+
+
+@bp.route('/player', methods=['GET'])
+def get_players():
+    players = db.session.query(model.Player).all()
+    player_list = []
+    for player in players:
+        player_data = {
+            'id': player.id,
+            'name': player.name
+        }
+    return jsonify(player_list)
+

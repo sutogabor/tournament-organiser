@@ -1,7 +1,6 @@
 from flask import Flask, jsonify, request, Blueprint
 from database_config import db_name
 from flask_sqlalchemy import SQLAlchemy
-import model
 app = Flask(__name__)
 
 
