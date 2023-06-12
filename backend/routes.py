@@ -31,3 +31,10 @@ def add_event():
     db.session.add(event)
     db.commit()
     return jsonify({"message": "Event successfully created."})
+
+
+@bp.route("/event/delete/<int:event_id>", methods=['POST'])
+def delete_event(event_id):
+    event = db.session.query(model.Event).get(event_id)
+    if not event:
+        return jsonify({"messsage": "Event not found."})
