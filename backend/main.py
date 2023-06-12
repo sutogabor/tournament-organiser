@@ -2,7 +2,11 @@ from flask import Flask, jsonify, request
 from database_config import db_name
 from flask_sqlalchemy import SQLAlchemy
 import model
+from flask_cors import CORS
+
+
 app = Flask(__name__)
+CORS(app, origins='http://localhost:5173', allow_headers=['Content-Type'])  # Enable CORS for all routes
 
 
 # adding configuration for using a sqlite database
@@ -38,7 +42,7 @@ def add_event():
 
 @app.route('/event/delete/<int:event_id>', methods=['POST'])
 def delete_event(event_id):
-    event = model.Event.query.get(event_id)
+    event = db.session.query(model.Event).get(event_id)
     if not event:
         return jsonify({'message': 'Event not found.'}), 404
     db.session.delete(event)
