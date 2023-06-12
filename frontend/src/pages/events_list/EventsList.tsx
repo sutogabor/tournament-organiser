@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 
 
-
+Type
 function EventsList() {
 
     const [events, setEvents] = useState([]);
@@ -9,7 +9,7 @@ function EventsList() {
 
 
     async function getData()  {
-        const response = await fetch('http://localhost:5000/event');
+        const response :Response = await fetch('http://localhost:5000/event');
         return response.json();
     }
 
@@ -54,7 +54,7 @@ function EventsList() {
 
     return (
             <div>
-                <div className="pokemon-list">
+                <div className="event-list">
                     {events.map((event) => (
                         <div className="card" key={event.id}> 
                             <div className="card-header">
