@@ -49,7 +49,7 @@ def get_event(event_id):
     return jsonify(event_data)
 
 
-@bp.route('/player', methods=['GET'])
+@bp.route("/player", methods=['GET'])
 def get_players():
     players = db.session.query(model.Player).all()
     player_list = []
@@ -60,3 +60,11 @@ def get_players():
         }
     return jsonify(player_list)
 
+
+@bp.route("player/add", methods=['POST'])
+def add_player():
+    added_player = request.get_json()
+    player = model.Player(name=added_player["name"])
+    db.session.add(player)
+    db.session.commit()
+    return jsonify({"message": "Player successfully added."})
