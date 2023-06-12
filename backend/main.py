@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, Blueprint
 from database_config import db_name
 from flask_sqlalchemy import SQLAlchemy
 import model
@@ -8,23 +8,10 @@ app = Flask(__name__)
 # adding configuration for using a sqlite database
 app.config['SQLALCHEMY_DATABASE_URI'] = db_name
 
+bp = Blueprint("app", __name__)
 db = SQLAlchemy()
 
 db.init_app(app)
-
-
-@app.route('/event', methods=['GET'])
-def get_events():
-    events = db.session.query(model.Event).all()
-    event_list = []
-    for event in events:
-        event_data = {
-            'id': event.id,
-            'name': event.name,
-            'date': event.date.strftime('%Y-%m-%d')
-        }
-        event_list.append(event_data)
-    return jsonify(event_list)
 
 
 @app.route('/event/add', methods=['POST'])
