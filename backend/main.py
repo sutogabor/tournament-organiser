@@ -14,13 +14,6 @@ db = SQLAlchemy()
 db.init_app(app)
 
 
-@app.route('/event/add', methods=['POST'])
-def add_event():
-    added_event = request.get_json()
-    event = model.Event(name=added_event['name'], date=added_event['date'])
-    db.session.add(event)
-    db.session.commit()
-    return jsonify({'message': 'Event created successfully.'}), 201
 
 
 @app.route('/event/delete/<int:event_id>', methods=['POST'])

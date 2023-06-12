@@ -22,3 +22,12 @@ def get_events():
         }
         event_list.append(event_data)
     return jsonify(event_list)
+
+
+@bp.route("/event/add", methods=[])
+def add_event():
+    added_event = request.get_json()
+    event = model.Event(name=added_event["name"], date=added_event['date'])
+    db.session.add(event)
+    db.commit()
+    return jsonify({"message": "Event successfully created."})
