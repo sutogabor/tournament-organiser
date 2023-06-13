@@ -58,6 +58,7 @@ def get_players():
             'id': player.id,
             'name': player.name
         }
+        player_list.append(player_data)
     return jsonify(player_list)
 
 
@@ -90,3 +91,19 @@ def get_player(player_id):
         "name": player.name
     }
     return jsonify(player_data)
+
+
+@bp.route("/matches", methods=['GET'])
+def get_matches():
+    matches = db.session.query(models.Match).all()
+    matches_list = []
+    for match in matches:
+        match_data = {
+            "id": match.id,
+            "player_1_id": match.player_1_id,
+            "player_2_id": match.player_2_id,
+            "event_id": match.event_id,
+            "winner": match.winner
+        }
+        matches_list.append(match_data)
+    return jsonify(matches_list)
