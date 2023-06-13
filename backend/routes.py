@@ -107,3 +107,16 @@ def get_matches():
         }
         matches_list.append(match_data)
     return jsonify(matches_list)
+
+
+@bp.route("/matches/add", methods=['POST'])
+def add_match():
+    added_match = request.get_json()
+    match = models.Match(
+        player_1_id=added_match["player_1_id"],
+        player_2_id=added_match["player_1_id"],
+        event_id=added_match["event_id"],
+        winner=None)
+    db.session.add(match)
+    db.session.commit()
+    return jsonify({"message": "Match successfully added."})
