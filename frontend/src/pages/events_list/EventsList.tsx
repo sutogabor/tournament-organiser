@@ -1,10 +1,15 @@
 import { useState, useEffect } from 'react';
 
 
-Type
-function EventsList() {
+interface Event {
+  id: number;
+  name: string;
+  date: string;
+}
 
-    const [events, setEvents] = useState([]);
+const EventsList:React.FC = () => {
+
+    const [events, setEvents] = useState<Event[]>([]);
     const [refresh, setRefresh] = useState(false);
 
 
@@ -15,7 +20,7 @@ function EventsList() {
 
     function refreshData() {
       getData().then(
-        (data) => {
+        (data:Event[]) => {
             setEvents(data);
             console.log(events);
         }
@@ -25,7 +30,7 @@ function EventsList() {
     
     async function deleteEvent(eventId:number) {  
     try {
-      const response = await fetch(`http://localhost:5000/event/delete/${eventId}`, {
+      const response :Response = await fetch(`http://localhost:5000/event/delete/${eventId}`, {
         method: "POST",
         headers: {
           'Content-Type': 'application/json'
