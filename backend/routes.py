@@ -13,7 +13,7 @@ def get_events():
         event_data = {
             'id': event.id,
             'name': event.name,
-            'date': event.date.strftime()
+            'date': event.date.strftime("%Y-%m-%d, %H:%M:%S")
         }
         event_list.append(event_data)
     return jsonify(event_list)
@@ -46,7 +46,7 @@ def get_event(event_id):
     event_data = {
         'id': event.id,
         'name': event.name,
-        'date': event.date.strftime('%Y-%m-%d')
+        'date': event.date.strftime("%Y-%m-%d, %H:%M:%S")
     }
     return jsonify(event_data)
 
