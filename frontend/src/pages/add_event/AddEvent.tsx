@@ -1,13 +1,13 @@
 import  { useState } from 'react';
 
-function AddEvent() {
-  const [name, setName] = useState("");
-  const [date, setDate] = useState("");
+const AddEvent: React.FC = () => {
+  const [name, setName] = useState<string>("");
+  const [date, setDate] = useState<string>("");
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:5000/event/add', {
+      const response: Response = await fetch('http://localhost:5000/event/add', {
         method: "POST",
         headers: {
           'Content-Type': 'application/json'
