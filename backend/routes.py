@@ -109,6 +109,21 @@ def get_matches():
     return jsonify(matches_list)
 
 
+@bp.route("/matches/<id:match_id>")
+def get_match(match_id):
+    match = db.session.query(models.Match).get(match_id)
+    if not match:
+        return jsonify({"message": "Match not found."})
+    match_data = {
+        "id": match.id,
+        "player_1_id": match.player_1_id,
+        "player_2_id": match.player_2_id,
+        "event_id": match.event_id,
+        "winner": match.winner
+    }
+    return jsonify(match_data)
+
+
 @bp.route("/matches/add", methods=['POST'])
 def add_match():
     added_match = request.get_json()
