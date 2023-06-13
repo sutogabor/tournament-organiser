@@ -1,5 +1,5 @@
 from flask import jsonify, request
-import model
+import models
 from main import bp, db
 
 
@@ -78,3 +78,15 @@ def delete_player(player_id):
     db.session.delete(player)
     db.session.commit()
     return jsonify({"message": "Event deleted successfully."})
+
+
+@bp.route("/player/<id:player_id>", methods=['GET'])
+def get_player(player_id):
+    player = db.session.query(model.Player).get(player_id)
+    if not player:
+        return jsonify({"message": "Player not found."}), 404
+    player_data = {
+        "id": player.id,
+        "name": player.name
+    }
+    return jsonify(player_data)

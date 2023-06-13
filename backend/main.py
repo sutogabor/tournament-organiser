@@ -1,15 +1,14 @@
 from flask import Flask, jsonify, request, Blueprint
 from database_config import db_name
 from flask_sqlalchemy import SQLAlchemy
+
+
 app = Flask(__name__)
-
-
-# adding configuration for using a sqlite database
 app.config['SQLALCHEMY_DATABASE_URI'] = db_name
 
 bp = Blueprint("app", __name__)
-db = SQLAlchemy()
 
+db = SQLAlchemy()
 db.init_app(app)
 
 
