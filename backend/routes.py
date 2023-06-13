@@ -17,7 +17,7 @@ def get_events():
     return jsonify(event_list)
 
 
-@bp.route("/event/add", methods=[])
+@bp.route("/event/add", methods=['POST'])
 def add_event():
     added_event = request.get_json()
     event = models.Event(name=added_event["name"], date=added_event['date'])
@@ -26,7 +26,7 @@ def add_event():
     return jsonify({"message": "Event successfully created."})
 
 
-@bp.route("/event/delete/<int:event_id>", methods=['POST'])
+@bp.route("/event/delete/<int:event_id>", methods=['DELETE'])
 def delete_event(event_id):
     event = db.session.query(models.Event).get(event_id)
     if not event:
@@ -71,7 +71,7 @@ def add_player():
     return jsonify({"message": "Player successfully added."})
 
 
-@bp.route("/player/delete/<id:player_id>")
+@bp.route("/player/delete/<id:player_id>", methods=['DELETE'])
 def delete_player(player_id):
     player = db.session.query(models.Player).get(player_id)
     if not player:
@@ -120,3 +120,15 @@ def add_match():
     db.session.add(match)
     db.session.commit()
     return jsonify({"message": "Match successfully added."})
+
+
+@bp.route("/matches/delete/<id:event_id>", methods=['DELETE'])
+def delete_matches(event_id):
+    matches = db.session.query(models.Match).get(event_id)
+    if not matches:
+        return jsonify({"message": "Matches not found."}), 404
+    for match in matches:
+        db.session.delete(match)
+    db.session.commit()
+    return jsonify({"message": "Matches deleted successfully."})
+
