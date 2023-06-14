@@ -7,7 +7,7 @@ const AddEvent: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response: Response = await fetch('http://localhost:5000/event/add', {
+      const response: Response = await fetch('/event/add', {
         method: "POST",
         headers: {
           'Content-Type': 'application/json'

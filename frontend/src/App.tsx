@@ -5,6 +5,7 @@ import AddEvent from "./pages/add_event/AddEvent.tsx";
 import UpcomingEvents from "./pages/events_lists/UpcomingEvents.tsx";
 import OngoingEvents from "./pages/events_lists/OngoingEvents.tsx";
 
+import EventDetails from "./pages/event_details/EventDetails.tsx";
 
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
                 <SideBar />
                 <Routes>
                     <Route path="/" element={<HomePage />}/>
+                    <Route path="/event-details/:id" element={ <EventDetails />}/>
                     <Route path="/add-event" element={ <AddEvent />}/>
                     <Route path="/ongoing-events" element={<OngoingEvents />}/>
                     <Route path="/upcoming-events" element={ <UpcomingEvents /> }/>

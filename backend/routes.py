@@ -23,7 +23,8 @@ def get_events():
 @routes_bp.route("/event/add", methods=['POST'])
 def add_event():
     added_event = request.get_json()
-    event = models.Event(name=added_event["name"], date=added_event['date'])
+    event_date = datetime.strptime(added_event['date'], "%Y-%m-%dT%H:%M")
+    event = models.Event(name=added_event["name"], date=event_date)
     models.db.session.add(event)
     models.db.commit()
     return jsonify({"message": "Event successfully created."})
