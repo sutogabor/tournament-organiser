@@ -1,5 +1,6 @@
 from flask import jsonify, request, Blueprint
 import models
+from datetime import datetime
 
 
 routes_bp = Blueprint("routes", __name__)
@@ -13,7 +14,7 @@ def get_events():
         event_data = {
             'id': event.id,
             'name': event.name,
-            'date': event.date.strftime("%Y-%m-%d, %H:%M:%S")
+            'date': datetime.strptime("%Y-%m-%dT%H:%M")
         }
         event_list.append(event_data)
     return jsonify(event_list)
@@ -46,7 +47,7 @@ def get_event(event_id):
     event_data = {
         'id': event.id,
         'name': event.name,
-        'date': event.date.strftime("%Y-%m-%d, %H:%M:%S")
+        'date': event.date.strftime("%Y-%m-%dT%H:%M")
     }
     return jsonify(event_data)
 

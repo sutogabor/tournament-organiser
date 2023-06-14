@@ -5,6 +5,7 @@ from flask_sqlalchemy import SQLAlchemy
 Base = declarative_base()
 db = SQLAlchemy()
 
+
 class Player(Base):
     __tablename__ = "players"
     id = Column(Integer, primary_key=True)
