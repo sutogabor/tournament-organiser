@@ -2,8 +2,10 @@ from sqlalchemy import Column, Integer, String, ForeignKey, Date
 from sqlalchemy.orm import declarative_base, relationship
 from flask_sqlalchemy import SQLAlchemy
 
+
 Base = declarative_base()
 db = SQLAlchemy()
+
 
 class Player(Base):
     __tablename__ = "players"

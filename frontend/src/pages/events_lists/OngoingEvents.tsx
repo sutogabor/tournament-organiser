@@ -8,12 +8,12 @@ interface Event {
 
 
 const OngoingEvents = () => {
-    const [events, setEvents] = useState<Event[]>([]);
+    const [uEvents, setEvents] = useState<Event[]>([]);
     const [refresh, setRefresh] = useState<boolean>(false);
 
 
     async function getData()  {
-        const response :Response = await fetch('http://localhost:5000/event');
+        const response :Response = await fetch('/event');
         return response.json();
     }
 
@@ -21,7 +21,7 @@ const OngoingEvents = () => {
         getData().then(
             (data) => {
                 setEvents(data);
-                console.log(events);
+                console.log(uEvents);
             }
         )
     }
@@ -29,7 +29,7 @@ const OngoingEvents = () => {
 
     async function deleteEvent(eventId:number) {
         try {
-            const response = await fetch(`http://localhost:5000/event/delete/${eventId}`, {
+            const response = await fetch(`/event/delete/${eventId}`, {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json'
@@ -52,7 +52,7 @@ const OngoingEvents = () => {
         setRefresh(false);
     },[refresh])
 
-    if(events.length == 0) {
+    if(uEvents.length == 0) {
         return "LOOOOOOAAAADDDIIIING";
     }
 
@@ -60,7 +60,7 @@ const OngoingEvents = () => {
         <div className="content">
             <h1>Ongoing Events</h1>
             <div className="event-list">
-                {events.map((event) => (
+                {uEvents.map((event) => (
                     <div className="card" key={event.id}>
                         <div className="card-details">
                             <div className="card-header">

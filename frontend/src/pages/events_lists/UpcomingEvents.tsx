@@ -13,7 +13,7 @@ function UpcomingEvents() {
 
 
     async function getData() {
-        const response: Response = await fetch('http://localhost:5000/event');
+        const response: Response = await fetch('/event');
         return response.json();
     }
 
@@ -29,7 +29,7 @@ function UpcomingEvents() {
 
     async function deleteEvent(eventId: number) {
         try {
-            const response = await fetch(`http://localhost:5000/event/delete/${eventId}`, {
+            const response = await fetch(`/event/delete/${eventId}`, {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json'

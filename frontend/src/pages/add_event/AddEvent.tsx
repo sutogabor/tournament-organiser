@@ -1,18 +1,19 @@
-import  { useState } from 'react';
 
-function AddEvent() {
-  const [name, setName] = useState("");
-  const [date, setDate] = useState("");
+import { useState, ChangeEvent, FormEvent } from 'react';
 
-  const handleSubmit = async (e) => {
+const AddEvent = (): JSX.Element => {
+  const [name, setName] = useState<string>("");
+  const [date, setDate] = useState<string>("");
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:5000/event/add', {
+      const response = await fetch('/event/add', {
         method: "POST",
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ name: name, date: date })
+        body: JSON.stringify({ name, date })
       });
 
       console.log(name, date);
@@ -27,23 +28,31 @@ function AddEvent() {
     }
   };
 
+  const handleNameChange = (e: ChangeEvent<HTMLInputElement>): void => {
+    setName(e.target.value);
+  };
+
+  const handleDateChange = (e: ChangeEvent<HTMLInputElement>): void => {
+    setDate(e.target.value);
+  };
+
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          placeholder="Your Event name"
-        />
-        <input
-          type="datetime-local"
-          value={date}
-          onChange={(e) => setDate(e.target.value)}
-        />
-        <button type="submit">Add</button>
-      </form>
-    </div>
+      <div>
+        <form onSubmit={handleSubmit}>
+          <input
+              type="text"
+              value={name}
+              onChange={handleNameChange}
+              placeholder="Your Event name"
+          />
+          <input
+              type="datetime-local"
+              value={date}
+              onChange={handleDateChange}
+          />
+          <button type="submit">Add</button>
+        </form>
+      </div>
   );
 }
 
