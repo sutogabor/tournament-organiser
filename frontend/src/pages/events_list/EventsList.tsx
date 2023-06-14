@@ -1,11 +1,8 @@
 import { useState, useEffect } from 'react';
+import { Event } from '../interfaces/Event';
+import { Link } from 'react-router-dom';
 
 
-interface Event {
-  id: number;
-  name: string;
-  date: string;
-}
 
 const EventsList:React.FC = () => {
 
@@ -71,6 +68,7 @@ const EventsList:React.FC = () => {
                             
                             <div className="card-footer">
                             <input type='button' onClick={() => deleteEvent(event.id)} value="Delete" />
+                            <Link to={`/event-details/${event.id}`}><button>Show event</button></Link>
                             </div>
                         </div>
                     ))}
