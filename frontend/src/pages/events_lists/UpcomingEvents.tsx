@@ -1,4 +1,4 @@
-import {useState, useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 
 interface Event {
     id: number
@@ -6,7 +6,7 @@ interface Event {
     date: string
 }
 
-function UpcomingEvents() {
+const UpcomingEvents: React.FC = () => {
 
     const [events, setEvents] = useState<Event[]>([]);
     const [refresh, setRefresh] = useState<boolean>(false);
@@ -30,7 +30,7 @@ function UpcomingEvents() {
     async function deleteEvent(eventId: number) {
         try {
             const response = await fetch(`/event/delete/${eventId}`, {
-                method: "POST",
+                method: "DELETE",
                 headers: {
                     'Content-Type': 'application/json'
                 }

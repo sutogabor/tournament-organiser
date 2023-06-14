@@ -1,19 +1,18 @@
+import  { useState } from 'react';
 
-import { useState, ChangeEvent, FormEvent } from 'react';
-
-const AddEvent = (): JSX.Element => {
+const AddEvent: React.FC = () => {
   const [name, setName] = useState<string>("");
   const [date, setDate] = useState<string>("");
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await fetch('/event/add', {
+      const response: Response = await fetch('http://localhost:5000/event/add', {
         method: "POST",
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ name, date })
+        body: JSON.stringify({ name: name, date: date })
       });
 
       console.log(name, date);
@@ -28,31 +27,23 @@ const AddEvent = (): JSX.Element => {
     }
   };
 
-  const handleNameChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    setName(e.target.value);
-  };
-
-  const handleDateChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    setDate(e.target.value);
-  };
-
   return (
-      <div>
-        <form onSubmit={handleSubmit}>
-          <input
-              type="text"
-              value={name}
-              onChange={handleNameChange}
-              placeholder="Your Event name"
-          />
-          <input
-              type="datetime-local"
-              value={date}
-              onChange={handleDateChange}
-          />
-          <button type="submit">Add</button>
-        </form>
-      </div>
+    <div>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          placeholder="Your Event name"
+        />
+        <input
+          type="datetime-local"
+          value={date}
+          onChange={(e) => setDate(e.target.value)}
+        />
+        <button type="submit">Add</button>
+      </form>
+    </div>
   );
 }
 

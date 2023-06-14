@@ -30,7 +30,7 @@ const OngoingEvents = () => {
     async function deleteEvent(eventId:number) {
         try {
             const response = await fetch(`/event/delete/${eventId}`, {
-                method: "POST",
+                method: "DELETE",
                 headers: {
                     'Content-Type': 'application/json'
                 }
