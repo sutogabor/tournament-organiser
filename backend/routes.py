@@ -1,5 +1,6 @@
 from flask import jsonify, request, Blueprint
 import models
+from datetime import datetime
 
 
 routes_bp = Blueprint("routes", __name__)
@@ -13,7 +14,7 @@ def get_events():
         event_data = {
             'id': event.id,
             'name': event.name,
-            'date': event.date.strftime("%Y-%m-%d, %H:%M:%S")
+            'date': datetime.strptime("%Y-%m-%dT%H:%M")
         }
         event_list.append(event_data)
     return jsonify(event_list)
@@ -22,7 +23,7 @@ def get_events():
 @routes_bp.route("/event/add", methods=['POST'])
 def add_event():
     added_event = request.get_json()
-    event = models.Event(name=added_event["name"], date=added_event['date'])
+    event = models.Event(name=added_event["name"], date=datetime.strptime(added_event['date']))
     models.db.session.add(event)
     models.db.commit()
     return jsonify({"message": "Event successfully created."})
@@ -46,7 +47,7 @@ def get_event(event_id):
     event_data = {
         'id': event.id,
         'name': event.name,
-        'date': event.date.strftime('%Y-%m-%d')
+        'date': event.date.strftime("%Y-%m-%dT%H:%M")
     }
     return jsonify(event_data)
 
@@ -148,3 +149,18 @@ def delete_matches(event_id):
         models.db.session.delete(match)
     models.db.session.commit()
     return jsonify({"message": "Matches deleted successfully."})
+
+
+@routes_bp.route("/event/<int:event_id>/players", methods=['GET'])
+def get_players_by_event(event_id):
+    participants = models.db.session.query(models.PlayerEvent).get(event_id)
+    players = []
+    if not participants:
+        return jsonify({"message": "Players not found."}), 404
+    for player in participants:
+        player_data = {
+            "id": player.id,
+            "name": player.name
+        }
+        players.append(player_data)
+    return jsonify(players)
