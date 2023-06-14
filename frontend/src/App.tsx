@@ -14,7 +14,6 @@ function App() {
         <div>
             <Router>
                 <Routes>
-                    {/* TODO */}
                     <Route path="/event-details/:id" element={ <EventDetails />}/>
                     <Route path="/" element={<HomePage/>}/>
                     <Route path="/add-event" element={ <AddEvent/>}/>
