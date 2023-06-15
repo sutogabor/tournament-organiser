@@ -68,10 +68,9 @@ const OngoingEvents = () => {
                             </div>
                         </div>
                         <div className="card-buttons">
-                            <div className="delete-button">
                                 <input type='button' onClick={() => deleteEvent(event.id)} value="Delete"/>
-                                <Link to={`/event-details/${event.id}`}><button>Show event</button></Link>
-                            </div>
+
+                                <Link to={`/event-details/${event.id}`}><input type='button'value="Show event"/></Link>
                         </div>
                     </div>
                 ))}

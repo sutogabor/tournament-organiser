@@ -79,8 +79,17 @@ body {
 
 .card-buttons {
   display: flex;
+  flex-direction: column-reverse;
+  gap: 10px;
   height: 100%;
   align-items: flex-end;
+}
+
+.card-buttons>input {
+  background-color: var(--button-color);
+  color: var(--button-text-color);
+  width: 60px;
+  height: 40px
 }
 
 .delete-button {
