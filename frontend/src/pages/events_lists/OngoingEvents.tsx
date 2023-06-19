@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import { Event } from '../interfaces/Event';
+import { Event } from '../../interfaces/Event';
 import { Link } from 'react-router-dom';
 
 

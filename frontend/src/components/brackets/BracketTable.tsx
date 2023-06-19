@@ -1,6 +1,6 @@
 
 
-function BracketMaker () {
+function BracketTable () {
 
 
 
@@ -12,4 +12,4 @@ function BracketMaker () {
     )
 }
 
-export default BracketMaker;
+export default BracketTable;

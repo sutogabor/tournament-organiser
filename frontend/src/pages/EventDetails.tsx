@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Event } from '../interfaces/Event';
+import { Event } from '../interfaces/Event.ts';
 import { useParams } from 'react-router-dom';
 
 interface EventDetailsParams {
