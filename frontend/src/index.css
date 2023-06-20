@@ -58,12 +58,13 @@ body {
   justify-content: space-between;
   background-color: var(--card-background);
   box-shadow: 0 0 55px rgba(38, 40, 45, .75);
-  width: 75vw;
-  height: 15vw;
+  width: 40vw;
+  height: 20vh;
   min-height: 100px;
-  max-width: 500px;
+  min-width: 250px;
   border-radius: 4px;
   text-align: left;
+  padding: 15px;
 
 }
 
@@ -71,31 +72,28 @@ body {
   display: flex;
   flex-direction: column;
   height: 100%;
-  padding-top: 15px;
-  padding-left: 15px;
-  padding-bottom: 15px;
+
   gap: 10px;
 }
 
 .card-buttons {
   display: flex;
-  flex-direction: column-reverse;
+  flex-direction: column;
   gap: 10px;
   height: 100%;
-  align-items: flex-end;
+  justify-content: flex-end;
+
+
 }
 
-.card-buttons>input {
+.card-button {
   background-color: var(--button-color);
   color: var(--button-text-color);
-  width: 60px;
+  width: 80px;
   height: 40px
 }
 
-.delete-button {
-  margin-bottom: 15px;
-  margin-right: 15px;
-}
+
 
 .delete-button>input {
   background-color: var(--button-color);

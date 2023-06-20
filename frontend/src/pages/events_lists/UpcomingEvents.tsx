@@ -71,9 +71,7 @@ const UpcomingEvents: React.FC = () => {
                             </div>
                         </div>
                         <div className="card-buttons">
-                            <div className="delete-button">
-                                <input type='button' onClick={() => deleteEvent(event.id)} value="Delete"/>
-                            </div>
+                            <input className="card-button" type='button' onClick={() => deleteEvent(event.id)} value="Delete"/>
                         </div>
                     </div>
                 ))}
