@@ -13,9 +13,10 @@ const AddPlayer = () => {
         setEvents(response);
     }
 
-    const handleSubmit = async (e: React.FormEvent) => {
+    const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        const response = await apiPost({name: playerName, eventIds: selectedEvents}, '/player/add', 'Player created successfully');
+        apiPost({name: playerName, eventIds: selectedEvents}, '/player/add', 'Player created successfully');
+        setSelectedEvents([]);
     }
 
 
