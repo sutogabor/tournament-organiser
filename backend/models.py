@@ -1,9 +1,11 @@
-from sqlalchemy import Column, Integer, String, ForeignKey, Date
+from sqlalchemy import Column, Integer, String, ForeignKey, DateTime, Sequence
 from sqlalchemy.orm import declarative_base, relationship
 from flask_sqlalchemy import SQLAlchemy
 
+
 Base = declarative_base()
 db = SQLAlchemy()
+
 
 class Player(Base):
     __tablename__ = "players"
@@ -14,7 +16,7 @@ class Player(Base):
 
 class PlayerEvent(Base):
     __tablename__ = 'player_event'
-    id = Column(Integer, primary_key=True)
+    id = Column(Integer, Sequence('player_event_id_seq', start=1, increment=1), primary_key=True, autoincrement=True)
     player_id = Column(Integer, ForeignKey('players.id'), primary_key=True)
     event_id = Column(Integer, ForeignKey('events.id'), primary_key=True)
 
@@ -23,7 +25,7 @@ class Event(Base):
     __tablename__ = "events"
     id = Column(Integer, primary_key=True)
     name = Column(String(255))
-    date = Column(Date)
+    date = Column(DateTime)
     players = relationship("Player", secondary="player_event", back_populates="events")
 
 

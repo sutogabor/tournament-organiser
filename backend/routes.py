@@ -1,5 +1,6 @@
 from flask import jsonify, request, Blueprint
 import models
+from datetime import datetime
 
 
 routes_bp = Blueprint("routes", __name__)
@@ -13,7 +14,7 @@ def get_events():
         event_data = {
             'id': event.id,
             'name': event.name,
-            'date': event.date.strftime("%Y-%m-%d, %H:%M:%S")
+            'date': event.date.strftime("%Y-%m-%dT%H:%M")
         }
         event_list.append(event_data)
     return jsonify(event_list)
@@ -24,7 +25,7 @@ def add_event():
     added_event = request.get_json()
     event = models.Event(name=added_event["name"], date=added_event['date'])
     models.db.session.add(event)
-    models.db.commit()
+    models.db.session.commit()
     return jsonify({"message": "Event successfully created."})
 
 
@@ -46,7 +47,7 @@ def get_event(event_id):
     event_data = {
         'id': event.id,
         'name': event.name,
-        'date': event.date.strftime("%Y-%m-%d, %H:%M:%S")
+        'date': event.date.strftime("%Y-%m-%dT%H:%M")
     }
     return jsonify(event_data)
 
@@ -67,8 +68,13 @@ def get_players():
 @routes_bp.route("/player/add", methods=['POST'])
 def add_player():
     added_player = request.get_json()
+    event_ids = added_player.get("eventIds")
     player = models.Player(name=added_player["name"])
     models.db.session.add(player)
+    models.db.session.flush()
+    for event_id in event_ids:
+        player_event = models.PlayerEvent(player_id=player.id, event_id=event_id)
+        models.db.session.add(player_event)
     models.db.session.commit()
     return jsonify({"message": "Player successfully added."})
 
@@ -148,3 +154,18 @@ def delete_matches(event_id):
         models.db.session.delete(match)
     models.db.session.commit()
     return jsonify({"message": "Matches deleted successfully."})
+
+
+@routes_bp.route("/event/<int:event_id>/players", methods=['GET'])
+def get_players_by_event(event_id):
+    participants = models.db.session.query(models.PlayerEvent).get(event_id)
+    players = []
+    if not participants:
+        return jsonify({"message": "Players not found."}), 404
+    for player in participants:
+        player_data = {
+            "id": player.id,
+            "name": player.name
+        }
+        players.append(player_data)
+    return jsonify(players)

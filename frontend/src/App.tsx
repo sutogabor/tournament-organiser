@@ -1,35 +1,31 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
+import HomePage from "./pages/HomePage.tsx";
+import SideBar from "./components/SideBar.tsx";
+import AddEvent from "./pages/AddEvent.tsx";
+import UpcomingEvents from "./pages/events_lists/UpcomingEvents.tsx";
+import OngoingEvents from "./pages/events_lists/OngoingEvents.tsx";
+
+import EventDetails from "./pages/EventDetails.tsx";
+
 
 function App() {
-  const [count, setCount] = useState(0)
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+
+    return (
+        <div>
+            <Router>
+                <SideBar />
+                <Routes>
+                    <Route path="/" element={<HomePage />}/>
+                    <Route path="/event-details/:id" element={ <EventDetails />}/>
+                    <Route path="/add-event" element={ <AddEvent />}/>
+                    <Route path="/ongoing-events" element={<OngoingEvents />}/>
+                    <Route path="/upcoming-events" element={ <UpcomingEvents /> }/>
+                </Routes>
+            </Router>
+        </div>
+    )
 }
+
 
 export default App
