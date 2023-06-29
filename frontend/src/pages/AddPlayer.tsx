@@ -1,15 +1,37 @@
 import {useEffect, useState} from "react";
 import {Event} from "../interfaces/Event.ts";
-import {apiGet} from "../utils/apiCalls.ts";
+import {apiGet, apiPost} from "../utils/apiCalls.ts";
 
 
 const AddPlayer = () => {
     const [events, setEvents] = useState<Event[]>([]);
+    const [playerName , setPlayerName] = useState('');
+    const [selectedEvents, setSelectedEvents] = useState<number[]>([]);
 
     const getEvents = async () :void => {
         const response :Promise<Event[]> = await apiGet('/event');
         setEvents(response);
     }
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        const response = await apiPost({name: playerName, eventIds: selectedEvents}, '/player/add', 'Player created successfully');
+    }
+
+
+
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+        const itemValue: number = Number(event.target.value);
+
+        if (event.target.checked) {
+            if (!selectedEvents.includes(itemValue)) {
+                setSelectedEvents([...selectedEvents, itemValue]);
+            }
+        } else {
+            const updatedItems: number[] = selectedEvents.filter((item) => item !== itemValue);
+            setSelectedEvents(updatedItems);
+        }
+    };
 
     useEffect(()=> {
         getEvents();
@@ -17,9 +39,26 @@ const AddPlayer = () => {
 
     return (
         <div>
-            {events.map((event:Event)=> (
-                <p>{event.name}</p>
-            ))}
+            <div>
+                <form onSubmit={handleSubmit}>
+                    <input
+                        type="text"
+                        value={playerName}
+                        onChange={(e) => setPlayerName(e.target.value)}
+                        placeholder="Player name"
+                    />
+
+                        {events.map((event:Event)=> (
+                            <div>
+                            <input type="checkbox" onChange={handleChange} value={event.id} id={event.name}/>
+                            <label htmlFor={event.name}>{event.name}</label>
+                            </div>
+                        ))}
+
+                    <button type="submit">Add</button>
+                </form>
+            </div>
+
         </div>
     )
 
