@@ -1,10 +1,10 @@
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import { Event } from '../../interfaces/Event';
-import { Link } from 'react-router-dom';
+import OngoingEventCard from "../../components/card/OngoingEventCard.tsx";
 
 
 
-const OngoingEvents = () => {
+const OngoingEvents: React.FC = () => {
     const [uEvents, setEvents] = useState<Event[]>([]);
     const [refresh, setRefresh] = useState<boolean>(false);
 
@@ -50,28 +50,20 @@ const OngoingEvents = () => {
     },[refresh])
 
     if(uEvents.length == 0) {
-        return "LOOOOOOAAAADDDIIIING";
+        return (
+            <div className="content">
+                <h1 className="page-title">Upcoming Events</h1>
+                <h2 className="message">No Events</h2>
+            </div>
+        )
     }
 
     return (
         <div className="content">
-            <h1>Ongoing Events</h1>
+            <h1 className="page-title">Ongoing Events</h1>
             <div className="event-list">
                 {uEvents.map((event) => (
-                    <div className="card" key={event.id}>
-                        <div className="card-details">
-                            <div className="card-header">
-                                {event.name}
-                            </div>
-                            <div className='card-body'>
-                                {event.date}
-                            </div>
-                        </div>
-                        <div className="card-buttons">
-                            <button className='card-button' onClick={() => deleteEvent(event.id)} >Delete</button>
-                            <Link to={`/event-details/${event.id}`}><button className='card-button'>Show Event</button></Link>
-                        </div>
-                    </div>
+                    <OngoingEventCard event={event} deleteEvent={deleteEvent}/>
                 ))}
             </div>
 
