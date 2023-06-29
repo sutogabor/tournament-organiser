@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import EventCard from "../../components/card/EventCard.tsx";
 
 interface Event {
     id: number
@@ -53,29 +54,20 @@ const UpcomingEvents: React.FC = () => {
     }, [refresh])
 
     if (events.length == 0) {
-        return "LOOOOOOAAAADDDIIIING";
+        return (
+            <div className="content">
+                <h1 className="page-title">Upcoming Events</h1>
+                <h2 className="message">No Events</h2>
+            </div>
+        )
     }
 
     return (
         <div className="content">
-            <h1>Upcoming Events</h1>
+            <h1 className="page-title">Upcoming Events</h1>
             <div className="event-list">
                 {events.map((event) => (
-                    <div className="card" key={event.id}>
-                        <div className="card-details">
-                            <div className="card-header">
-                                {event.name}
-                            </div>
-                            <div className='card-body'>
-                                {event.date}
-                            </div>
-                        </div>
-                        <div className="card-buttons">
-                            <div className="delete-button">
-                                <input type='button' onClick={() => deleteEvent(event.id)} value="Delete"/>
-                            </div>
-                        </div>
-                    </div>
+                    <EventCard event={event} deleteEvent={deleteEvent}/>
                 ))}
             </div>
 
