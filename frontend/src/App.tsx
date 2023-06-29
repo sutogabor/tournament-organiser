@@ -6,6 +6,7 @@ import UpcomingEvents from "./pages/events_lists/UpcomingEvents.tsx";
 import OngoingEvents from "./pages/events_lists/OngoingEvents.tsx";
 
 import EventDetails from "./pages/EventDetails.tsx";
+import AddPlayer from "./pages/AddPlayer.tsx";
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
                     <Route path="/add-event" element={ <AddEvent />}/>
                     <Route path="/ongoing-events" element={<OngoingEvents />}/>
                     <Route path="/upcoming-events" element={ <UpcomingEvents /> }/>
+                    <Route path="/add-player" element={ <AddPlayer /> }/>
                 </Routes>
             </Router>
         </div>
