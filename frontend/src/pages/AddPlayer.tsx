@@ -16,7 +16,7 @@ const AddPlayer = () => {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         apiPost({name: playerName, eventIds: selectedEvents}, '/player/add', 'Player created successfully');
-        setSelectedEvents([]);
+        window.location.reload()
     }
 
 
