@@ -14,7 +14,7 @@ def get_events():
         event_data = {
             'id': event.id,
             'name': event.name,
-            'date': datetime.strptime("%Y-%m-%dT%H:%M")
+            'date': event.date.strftime("%Y-%m-%dT%H:%M")
         }
         event_list.append(event_data)
     return jsonify(event_list)
@@ -23,9 +23,9 @@ def get_events():
 @routes_bp.route("/event/add", methods=['POST'])
 def add_event():
     added_event = request.get_json()
-    event = models.Event(name=added_event["name"], date=datetime.strptime(added_event['date']))
+    event = models.Event(name=added_event["name"], date=added_event['date'])
     models.db.session.add(event)
-    models.db.commit()
+    models.db.session.commit()
     return jsonify({"message": "Event successfully created."})
 
 
@@ -68,8 +68,13 @@ def get_players():
 @routes_bp.route("/player/add", methods=['POST'])
 def add_player():
     added_player = request.get_json()
+    event_ids = added_player.get("eventIds")
     player = models.Player(name=added_player["name"])
     models.db.session.add(player)
+    models.db.session.flush()
+    for event_id in event_ids:
+        player_event = models.PlayerEvent(player_id=player.id, event_id=event_id)
+        models.db.session.add(player_event)
     models.db.session.commit()
     return jsonify({"message": "Player successfully added."})
 
