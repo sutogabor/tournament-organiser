@@ -132,7 +132,7 @@ def add_match():
     added_match = request.get_json()
     match = models.Match(
         player_1_id=added_match["player_1_id"],
-        player_2_id=added_match["player_1_id"],
+        player_2_id=added_match["player_2_id"],
         event_id=added_match["event_id"],
         winner=None)
     models.db.session.add(match)
@@ -153,7 +153,7 @@ def delete_matches(event_id):
 
 @routes_bp.route("/event/<int:event_id>/players", methods=['GET'])
 def get_players_by_event(event_id):
-    participants = models.db.session.query(models.PlayerEvent).get(event_id)
+    participants = models.db.session.query(models.Player).join(models.PlayerEvent).filter_by(models.PlayerEvent.event_id == event_id).all()
     players = []
     if not participants:
         return jsonify({"message": "Players not found."}), 404
