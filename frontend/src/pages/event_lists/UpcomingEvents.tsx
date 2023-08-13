@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import EventCard from "../../components/card/EventCard.tsx";
+import EventCard from "../../components/cards/EventCard.tsx";
 
 interface Event {
     id: number
