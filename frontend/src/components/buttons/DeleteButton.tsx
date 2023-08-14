@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+
+import DeleteConfirmationModal from "../modals/DeleteConfirmationModal.tsx";
+import {useState} from "react";
 
 interface DeleteButtonProps {
     onDelete: () => void;
@@ -6,34 +8,29 @@ interface DeleteButtonProps {
 }
 
 const DeleteButton: React.FC<DeleteButtonProps> = ({ onDelete, isLoading }) => {
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const [isConfirmVisible, setIsConfirmVisible] = useState(false);
+    const handleModalOpen = () => {
+        setIsModalOpen(true);
+    };
 
-    const handleDeleteClick = () => {
-        if (isLoading) {
-            return;
-        }
-
-        if (isConfirmVisible) {
-            onDelete();
-            setIsConfirmVisible(false);
-        } else {
-            setIsConfirmVisible(true);
-        }
+    const handleModalClose = () => {
+        setIsModalOpen(false);
     };
 
     return (
         <div className="card-delete-button">
-            {isConfirmVisible ? (
-                <>
-                    <p>Are you sure?</p>
-                    <button onClick={handleDeleteClick}>Yes</button>
-                    <button onClick={() => setIsConfirmVisible(false)}>No</button>
-                </>
-            ) : (
-                <button onClick={handleDeleteClick}>
-                    {isLoading ? 'Deleting...' : 'Delete'}
-                </button>
+            <button onClick={handleModalOpen}>
+                {isLoading ? 'Deleting...' : 'Delete'}
+            </button>
+            {isModalOpen && (
+                <DeleteConfirmationModal
+                    onClose={handleModalClose}
+                    onDelete={() => {
+                        onDelete();
+                        handleModalClose();
+                    }}
+                />
             )}
         </div>
     );
