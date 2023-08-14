@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
-import { Event } from '../../interfaces/Event';
-import OngoingEventCard from "../../components/cards/OngoingEventCard.tsx";
+import { Event } from '../interfaces/Event.ts';
+import OngoingEventCard from "../components/cards/OngoingEventCard.tsx";
 
 
 
