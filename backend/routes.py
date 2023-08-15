@@ -70,6 +70,11 @@ def delete_event(event_id):
     event = models.db.session.query(models.Event).get(event_id)
     if not event:
         return jsonify({"message": "Event not found."}), 404
+    for player in event.players:
+        player.events.remove(event)
+    matches = models.db.session.query(models.Match).filter_by(event_id=event.id).all()
+    for match in matches:
+        models.db.session.delete(match)
     models.db.session.delete(event)
     models.db.session.commit()
     return jsonify({"message": "Event deleted successfully."})
