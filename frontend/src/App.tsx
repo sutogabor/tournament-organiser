@@ -20,7 +20,6 @@ function App() {
                     <Route path="/" element={<HomePage />}/>
                     <Route path="/event-details/:id" element={ <EventDetails />}/>
                     <Route path="/add-event" element={ <AddEvent />}/>
-                    <Route path="/ongoing-events" element={<OngoingEvents />}/>
                     <Route path="/upcoming-events" element={ <UpcomingEvents /> }/>
                     <Route path="/add-player" element={ <AddPlayer /> }/>
                 </Routes>
