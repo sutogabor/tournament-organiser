@@ -157,14 +157,15 @@ def delete_matches(event_id):
 
 @routes_bp.route("/event/<int:event_id>/players", methods=['GET'])
 def get_players_by_event(event_id):
-    participants = models.db.session.query(models.Player).join(models.PlayerEvent).filter_by(models.PlayerEvent.event_id == event_id).all()
-    players = []
-    if not participants:
+    event = models.db.session.query(models.Event).get(event_id)
+    players = event.players
+    data = []
+    if not players:
         return jsonify({"message": "Players not found."}), 404
-    for player in participants:
+    for player in players:
         player_data = {
             "id": player.id,
             "name": player.name
         }
-        players.append(player_data)
-    return jsonify(players)
+        data.append(player_data)
+    return jsonify(data)
