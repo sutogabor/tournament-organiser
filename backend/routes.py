@@ -1,4 +1,5 @@
 from flask import jsonify, request, Blueprint
+from sqlalchemy.orm import joinedload
 import models
 from datetime import datetime
 
@@ -14,7 +15,27 @@ def get_events():
         event_data = {
             'id': event.id,
             'name': event.name,
-            'date': event.date.strftime("%Y-%m-%dT%H:%M")
+            'date': event.date.strftime("%Y-%m-%dT%H:%M"),
+            'players': [player.name for player in event.players]
+        }
+        event_list.append(event_data)
+    return jsonify(event_list)
+
+
+@routes_bp.route("/events-with-players", methods=['GET'])
+def get_events_with_players():
+    events = (
+        models.db.session.query(models.Event)
+        .options(joinedload(models.Event.players))  # Load the associated players
+        .all()
+    )
+    event_list = []
+    for event in events:
+        event_data = {
+            'id': event.id,
+            'name': event.name,
+            'date': event.date.strftime("%Y-%m-%dT%H:%M"),
+            'players': [{'id': player.id, 'name': player.name} for player in event.players]
         }
         event_list.append(event_data)
     return jsonify(event_list)
