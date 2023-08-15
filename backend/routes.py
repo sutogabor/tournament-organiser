@@ -47,6 +47,21 @@ def add_event():
     event = models.Event(name=added_event["name"], date=added_event['date'])
     models.db.session.add(event)
     models.db.session.commit()
+    if 'players' in added_event:
+        for player_id in added_event['players']:
+            player = models.db.session.query(models.Player).get(player_id)
+            if player:
+                event.players.append(player)
+    if 'matches' in added_event:
+        for match_data in added_event['matches']:
+            match = models.Match(
+                player_1_id=match_data['player_1_id'],
+                player_2_id=match_data['player_2_id'],
+                event_id=event.id,
+                winner=match_data.get('winner')
+            )
+            models.db.session.add(match)
+    models.db.session.commit()
     return jsonify({"message": "Event successfully created."})
 
 
