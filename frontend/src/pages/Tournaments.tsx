@@ -6,54 +6,57 @@ import "./../styles/upcoming-events-page.css"
 import "./../styles/styles.css"
 
 
-const UpcomingEvents: React.FC = () => {
+const Tournaments: React.FC = () => {
 
 
     const [events, setEvents] = useState<Event[]>([]);
     const [refresh, setRefresh] = useState<boolean>(false);
-    const testData:Event[] = [
+    const currentDate = new Date();
+    const ongoingEvents = events.filter(event => new Date(event.date) <= currentDate);
+    const upcomingEvents = events.filter(event => new Date(event.date) > currentDate);
+
+    const testData: Event[] = [
         {
             "date": "2022-12-27T18:00",
             "id": 2,
             "name": "FIFA"
         },
         {
-            "date": "2022-12-27T18:00",
+            "date": "2024-12-27T18:00",
             "id": 3,
             "name": "TEKKEN"
         },
         {
-            "date": "2022-12-27T18:00",
+            "date": "2024-12-27T18:00",
             "id": 5,
             "name": "Smash Bros"
         },
         {
-            "date": "2023-08-14T13:53",
+            "date": "2024-08-14T13:53",
             "id": 6,
             "name": "Wind Jammers"
         },
         {
-            "date": "2023-08-14T13:53",
+            "date": "2024-08-14T13:53",
             "id": 7,
             "name": "Mario Kart"
         },
         {
-            "date": "2023-08-14T13:53",
+            "date": "2023-08-24T13:53",
             "id": 8,
             "name": "Foosball"
         }
     ]
 
 
-    async function getData(){
-
+    async function getData() {
         try {
             const response = await apiGet("https://localhost:8080/event");
             if (response && response.ok) {
                 const data = await response.json();
                 return data;
             } else {
-                console.log("Bad response at UpcomingEvents.getData")
+                console.log("Bad response at Tournaments.getData")
             }
         } catch (error) {
             console.log(error)
@@ -81,27 +84,41 @@ const UpcomingEvents: React.FC = () => {
         addTestData();
     }, [refresh]);
 
-
-
     if (events.length == 0) {
         return (
             <div className="content">
-                <h2 className="message">No Upcoming Events</h2>
+                <h2 className="message">No Tournaments to show</h2>
             </div>
         )
     }
 
     return (
         <div className="upcoming-events-container">
-            <h1 className="page-title">Upcoming Events</h1>
+            <h1 className="page-title">Tournaments</h1>
             <div className="event-cards-container">
-                {events.map(event => (
-                    <EventCard key={event.id} event={event}/>
-                ))}
+                {ongoingEvents.length > 0 && (
+                    <div className="event-section">
+                        <h2>Ongoing Events</h2>
+                        <div className="event-cards">
+                            {ongoingEvents.map(event => (
+                                <EventCard key={event.id} event={event}/>
+                            ))}
+                        </div>
+                    </div>
+                )}
+                {upcomingEvents.length > 0 && (
+                    <div className="event-section">
+                        <h2>Upcoming Events</h2>
+                        <div className="event-cards">
+                            {upcomingEvents.map(event => (
+                                <EventCard key={event.id} event={event}/>
+                            ))}
+                        </div>
+                    </div>
+                )}
             </div>
-
         </div>
-    )
-}
+    );
+};
 
-export default UpcomingEvents;
+export default Tournaments;

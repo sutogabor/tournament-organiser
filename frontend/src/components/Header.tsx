@@ -15,7 +15,7 @@ function Header() {
                         <NavLink to="/" className={`nav-link ${location.pathname === '/' ? 'active' : ''}`}>Home</NavLink>
                     </li>
                     <li className="nav-item">
-                        <NavLink to="/upcoming-events" className={`nav-link ${location.pathname === '/upcoming-events' ? 'active' : ''}`}>Upcoming Events</NavLink>
+                        <NavLink to="/tournaments" className={`nav-link ${location.pathname === '/upcoming-events' ? 'active' : ''}`}>Tournaments</NavLink>
                     </li>
                     <li className="nav-item">
                         <NavLink to="/add-event" className={`nav-link ${location.pathname === '/add-event' ? 'active' : ''}`}>Add New Event</NavLink>
