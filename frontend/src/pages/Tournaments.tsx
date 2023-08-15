@@ -98,7 +98,7 @@ const Tournaments: React.FC = () => {
             <div className="event-cards-container">
                 {ongoingEvents.length > 0 && (
                     <div className="event-section">
-                        <h2>Ongoing Events</h2>
+                        <h2>Ongoing Tournaments</h2>
                         <div className="event-cards">
                             {ongoingEvents.map(event => (
                                 <EventCard key={event.id} event={event}/>
@@ -108,7 +108,7 @@ const Tournaments: React.FC = () => {
                 )}
                 {upcomingEvents.length > 0 && (
                     <div className="event-section">
-                        <h2>Upcoming Events</h2>
+                        <h2>Upcoming Tournaments</h2>
                         <div className="event-cards">
                             {upcomingEvents.map(event => (
                                 <EventCard key={event.id} event={event}/>
