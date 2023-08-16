@@ -16,11 +16,13 @@ const Homepage: React.FC = () => {
                 <div className="information">
                     <div className="information-card">
                         <p>
-                            <h3>Welcome to my Tournament Organiser project!</h3>
-                            I started this pet project while I was learning programming in CodeCool,
-                            in order the help the organisation of school events such as Ping-Pong
-                            or video game tournaments. Thank you for trying it's features and feel
-                            free to ask me any questions. Enjoy your tournament! May the best win!!
+                            <h3>Welcome to Tournament Organiser!</h3>
+                            Tournament Organiser is a learning project designed to manage and organize game tournaments
+                            and participants. Tournament organizers can easily set up new tournaments,
+                            register participants, and track match outcomes. <br></br>
+                            The application's user-friendly interface and flexible architecture make it suitable
+                            for a wide range of sports and competitive events. Thank you for trying out this project,
+                            may the best win!
                         </p>
                     </div>
                 </div>
