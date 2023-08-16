@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {apiPost} from "../utils/apiCalls.ts";
-import "./../styles/add-event-page.css"
+import "../styles/add-tournament-page.css"
 
 const AddTournament: React.FC = () => {
   const [name, setName] = useState<string>('');

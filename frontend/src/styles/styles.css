@@ -59,10 +59,10 @@
 
 .event-cards-container {
     display: flex;
-    flex-wrap: wrap; /* Allow event cards to wrap */
-    gap: 20px; /* Set the space between event cards */
+    flex-wrap: wrap;
+    gap: 20px;
     justify-content: center;
-    margin-top: 20px; /* Add space between header and event cards */
+    margin-top: 20px;
 }
 
 .modal-overlay {
