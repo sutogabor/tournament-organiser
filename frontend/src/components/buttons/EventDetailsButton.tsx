@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import './../../styles/event-card.css'; // Import the CSS file for styling
+import '../../styles/tournament-card.css'; // Import the CSS file for styling
 
 interface EventDetailsButtonProps {
     eventId: number; // or whatever type your event IDs are

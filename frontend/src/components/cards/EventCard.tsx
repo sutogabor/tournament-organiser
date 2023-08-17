@@ -3,7 +3,7 @@ import {Event} from "../../interfaces/Event.ts";
 import EventDetailsButton from "../buttons/EventDetailsButton.tsx";
 import DeleteButton from "../buttons/DeleteButton.tsx";
 import useDeleteEvent from "../../hooks/useDeleteEvent.tsx";
-import "../../styles/event-card.css"
+import "../../styles/tournament-card.css"
 
 
 export interface EventCardProps {

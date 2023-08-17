@@ -59,10 +59,10 @@
 
 .event-cards-container {
     display: flex;
-    flex-wrap: wrap; /* Allow event cards to wrap */
-    gap: 20px; /* Set the space between event cards */
+    flex-wrap: wrap;
+    gap: 20px;
     justify-content: center;
-    margin-top: 20px; /* Add space between header and event cards */
+    margin-top: 20px;
 }
 
 .modal-overlay {
@@ -102,4 +102,14 @@
 .delete-no {
     background-color: #5bc0de;
     color: white;
+}
+
+.page-title {
+    background-color: #37393A;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    font-size: 2rem;
+    width: 100%;
+    margin-bottom: 20px;
 }

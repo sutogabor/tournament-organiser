@@ -15,13 +15,10 @@ function Header() {
                         <NavLink to="/" className={`nav-link ${location.pathname === '/' ? 'active' : ''}`}>Home</NavLink>
                     </li>
                     <li className="nav-item">
-                        <NavLink to="/upcoming-events" className={`nav-link ${location.pathname === '/upcoming-events' ? 'active' : ''}`}>Upcoming Events</NavLink>
+                        <NavLink to="/tournaments" className={`nav-link ${location.pathname === '/tournaments' ? 'active' : ''}`}>Tournaments</NavLink>
                     </li>
                     <li className="nav-item">
-                        <NavLink to="/ongoing-events" className={`nav-link ${location.pathname === '/ongoing-events' ? 'active' : ''}`}>Ongoing Events</NavLink>
-                    </li>
-                    <li className="nav-item">
-                        <NavLink to="/add-event" className={`nav-link ${location.pathname === '/add-event' ? 'active' : ''}`}>Add New Event</NavLink>
+                        <NavLink to="/add-tournament" className={`nav-link ${location.pathname === '/add-tournament' ? 'active' : ''}`}>New Tournament</NavLink>
                     </li>
                     <li className="nav-item">
                         <NavLink to="/add-player" className={`nav-link ${location.pathname === '/add-player' ? 'active' : ''}`}>Add Player</NavLink>
