@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import EventCard from "../components/cards/EventCard.tsx";
 import {Event} from "../interfaces/Event.ts";
 import {apiGet} from "../utils/apiCalls.ts";
-import "./../styles/upcoming-events-page.css"
+import "../styles/tournaments-page.css"
 import "./../styles/styles.css"
 
 
@@ -93,9 +93,9 @@ const Tournaments: React.FC = () => {
     }
 
     return (
-        <div className="upcoming-events-container">
+        <div className="tournaments-container">
             <h1 className="page-title">Tournaments</h1>
-            <div className="event-cards-container">
+            <div className="tournament-cards-container">
                 {ongoingEvents.length > 0 && (
                     <div className="event-section">
                         <h2>Ongoing Tournaments</h2>
