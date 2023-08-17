@@ -14,6 +14,16 @@ const Tournaments: React.FC = () => {
     const currentDate = new Date();
     const ongoingEvents = events.filter(event => new Date(event.date) <= currentDate);
     const upcomingEvents = events.filter(event => new Date(event.date) > currentDate);
+    const [searchQuery, setSearchQuery] = useState<string>("");
+
+    let displayedOngoingEvents = ongoingEvents;
+    let displayedUpcomingEvents = upcomingEvents;
+
+    if (searchQuery !== "") {
+        displayedOngoingEvents = ongoingEvents.filter(event => event.name.toLowerCase().includes(searchQuery.toLowerCase()));
+        displayedUpcomingEvents = upcomingEvents.filter(event => event.name.toLowerCase().includes(searchQuery.toLowerCase()));
+    }
+
 
     const testData: Event[] = [
         {
@@ -27,7 +37,7 @@ const Tournaments: React.FC = () => {
             "name": "TEKKEN"
         },
         {
-            "date": "2024-12-27T18:00",
+            "date": "2022-12-27T18:00",
             "id": 5,
             "name": "Smash Bros"
         },
@@ -95,22 +105,31 @@ const Tournaments: React.FC = () => {
     return (
         <div className="tournaments-container">
             <h1 className="page-title">Tournaments</h1>
+            <div className="search-bar">
+                <input
+                    type="text"
+                    placeholder="Search tournaments..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="search-input"
+                />
+            </div>
             <div className="tournament-cards-container">
-                {ongoingEvents.length > 0 && (
+                {displayedOngoingEvents.length > 0 && (
                     <div className="event-section">
                         <h2>Ongoing Tournaments</h2>
                         <div className="event-cards">
-                            {ongoingEvents.map(event => (
+                            {displayedOngoingEvents.map(event => (
                                 <EventCard key={event.id} event={event}/>
                             ))}
                         </div>
                     </div>
                 )}
-                {upcomingEvents.length > 0 && (
+                {displayedUpcomingEvents.length > 0 && (
                     <div className="event-section">
                         <h2>Upcoming Tournaments</h2>
                         <div className="event-cards">
-                            {upcomingEvents.map(event => (
+                            {displayedUpcomingEvents.map(event => (
                                 <EventCard key={event.id} event={event}/>
                             ))}
                         </div>
