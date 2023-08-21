@@ -6,50 +6,50 @@ from datetime import datetime
 routes_bp = Blueprint("routes", __name__)
 
 
-@routes_bp.route("/event", methods=['GET'])
-def get_events():
-    events = models.db.session.query(models.Event).all()
-    event_list = []
-    for event in events:
-        event_data = {
+@routes_bp.route("/tournament", methods=['GET'])
+def get_tournament():
+    tournaments = models.db.session.query(models.Tournament).all()
+    tournament_list = []
+    for event in tournaments:
+        tournament_data = {
             'id': event.id,
             'name': event.name,
             'date': event.date.strftime("%Y-%m-%dT%H:%M")
         }
-        event_list.append(event_data)
-    return jsonify(event_list)
+        tournament_list.append(tournament_data)
+    return jsonify(tournament_list)
 
 
-@routes_bp.route("/event/add", methods=['POST'])
-def add_event():
-    added_event = request.get_json()
-    event = models.Event(name=added_event["name"], date=added_event['date'])
-    models.db.session.add(event)
+@routes_bp.route("/tournament/add", methods=['POST'])
+def add_tournament():
+    added_tournament = request.get_json()
+    tournament = models.Tournament(name=added_tournament["name"], date=added_tournament['date'])
+    models.db.session.add(tournament)
     models.db.session.commit()
-    return jsonify({"message": "Event successfully created."})
+    return jsonify({"message": "Tournament successfully created."})
 
 
-@routes_bp.route("/event/delete/<int:event_id>", methods=['DELETE'])
-def delete_event(event_id):
-    event = models.db.session.query(models.Event).get(event_id)
-    if not event:
+@routes_bp.route("/tournament/delete/<int:tournament_id>", methods=['DELETE'])
+def delete_tournament(tournament_id):
+    tournament = models.db.session.query(models.Tournament).get(tournament_id)
+    if not tournament:
         return jsonify({"message": "Event not found."}), 404
-    models.db.session.delete(event)
+    models.db.session.delete(tournament)
     models.db.session.commit()
-    return jsonify({"message": "Event deleted successfully."})
+    return jsonify({"message": "Tournament deleted successfully."})
 
 
-@routes_bp.route("/event/<int:event_id>", methods=['GET'])
-def get_event(event_id):
-    event = models.db.session.query(models.Event).get(event_id)
-    if not event:
-        return jsonify({"message": "Event not found."}), 404
-    event_data = {
-        'id': event.id,
-        'name': event.name,
-        'date': event.date.strftime("%Y-%m-%dT%H:%M")
+@routes_bp.route("/tournament/<int:tournament_id>", methods=['GET'])
+def get_event(tournament_id):
+    tournament = models.db.session.query(models.Tournament).get(tournament_id)
+    if not tournament:
+        return jsonify({"message": "Tournament not found."}), 404
+    tournament_data = {
+        'id': tournament.id,
+        'name': tournament.name,
+        'date': tournament.date.strftime("%Y-%m-%dT%H:%M")
     }
-    return jsonify(event_data)
+    return jsonify(tournament_data)
 
 
 @routes_bp.route("/player", methods=['GET'])
@@ -140,9 +140,9 @@ def add_match():
     return jsonify({"message": "Match successfully added."})
 
 
-@routes_bp.route("/matches/delete/<int:event_id>", methods=['DELETE'])
-def delete_matches(event_id):
-    matches = models.db.session.query(models.Match).get(event_id)
+@routes_bp.route("/matches/delete/<int:tournament_id>", methods=['DELETE'])
+def delete_matches(tournament_id):
+    matches = models.db.session.query(models.Match).get(tournament_id)
     if not matches:
         return jsonify({"message": "Matches not found."}), 404
     for match in matches:
@@ -151,9 +151,10 @@ def delete_matches(event_id):
     return jsonify({"message": "Matches deleted successfully."})
 
 
-@routes_bp.route("/event/<int:event_id>/players", methods=['GET'])
-def get_players_by_event(event_id):
-    participants = models.db.session.query(models.Player).join(models.PlayerEvent).filter_by(models.PlayerEvent.event_id == event_id).all()
+@routes_bp.route("/event/<int:tournament_id>/players", methods=['GET'])
+def get_players_by_event(tournament_id):
+    participants = models.db.session.query(models.Player).join(models.PlayerTournament)\
+        .filter_by(models.PlayerTournament.event_id == tournament_id).all()
     players = []
     if not participants:
         return jsonify({"message": "Players not found."}), 404
