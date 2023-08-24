@@ -1,6 +1,5 @@
 from flask import jsonify, request, Blueprint
 import models
-from datetime import datetime
 
 
 routes_bp = Blueprint("routes", __name__)
@@ -20,7 +19,7 @@ def get_tournament():
     return jsonify(tournament_list)
 
 
-@routes_bp.route("/tournament/add", methods=['POST'])
+@routes_bp.route("/tournament", methods=['POST'])
 def add_tournament():
     added_tournament = request.get_json()
     tournament = models.Tournament(name=added_tournament["name"], date=added_tournament['date'])
@@ -29,8 +28,8 @@ def add_tournament():
     return jsonify({"message": "Tournament successfully created."})
 
 
-@routes_bp.route("/tournament/delete/<int:tournament_id>", methods=['DELETE'])
-def delete_tournament(tournament_id):
+@routes_bp.route("/tournament/<int:tournament_id>", methods=['DELETE'])
+def delete_tournament_by_id(tournament_id):
     tournament = models.db.session.query(models.Tournament).get(tournament_id)
     if not tournament:
         return jsonify({"message": "Event not found."}), 404
@@ -40,7 +39,7 @@ def delete_tournament(tournament_id):
 
 
 @routes_bp.route("/tournament/<int:tournament_id>", methods=['GET'])
-def get_event(tournament_id):
+def get_tournament_by_id(tournament_id):
     tournament = models.db.session.query(models.Tournament).get(tournament_id)
     if not tournament:
         return jsonify({"message": "Tournament not found."}), 404
@@ -65,7 +64,7 @@ def get_players():
     return jsonify(player_list)
 
 
-@routes_bp.route("/player/add", methods=['POST'])
+@routes_bp.route("/player", methods=['POST'])
 def add_player():
     added_player = request.get_json()
     player = models.Player(name=added_player["name"])
@@ -74,8 +73,8 @@ def add_player():
     return jsonify({"message": "Player successfully added."})
 
 
-@routes_bp.route("/player/delete/<int:player_id>", methods=['DELETE'])
-def delete_player(player_id):
+@routes_bp.route("/player/<int:player_id>", methods=['DELETE'])
+def delete_player_by_id(player_id):
     player = models.db.session.query(models.Player).get(player_id)
     if not player:
         return jsonify({"message": "Player not found."}), 404
@@ -85,7 +84,7 @@ def delete_player(player_id):
 
 
 @routes_bp.route("/player/<int:player_id>", methods=['GET'])
-def get_player(player_id):
+def get_player_by_id(player_id):
     player = models.db.session.query(models.Player).get(player_id)
     if not player:
         return jsonify({"message": "Player not found."}), 404
@@ -112,8 +111,8 @@ def get_matches():
     return jsonify(matches_list)
 
 
-@routes_bp.route("/matches/<int:match_id>")
-def get_match(match_id):
+@routes_bp.route("/matches/<int:match_id>", methods=['GET'])
+def get_match_by_id(match_id):
     match = models.db.session.query(models.Match).get(match_id)
     if not match:
         return jsonify({"message": "Match not found."}), 404
@@ -127,7 +126,7 @@ def get_match(match_id):
     return jsonify(match_data)
 
 
-@routes_bp.route("/matches/add", methods=['POST'])
+@routes_bp.route("/matches", methods=['POST'])
 def add_match():
     added_match = request.get_json()
     match = models.Match(
@@ -140,8 +139,8 @@ def add_match():
     return jsonify({"message": "Match successfully added."})
 
 
-@routes_bp.route("/matches/delete/<int:tournament_id>", methods=['DELETE'])
-def delete_matches(tournament_id):
+@routes_bp.route("/matches/<int:tournament_id>", methods=['DELETE'])
+def delete_matches_by_id(tournament_id):
     matches = models.db.session.query(models.Match).get(tournament_id)
     if not matches:
         return jsonify({"message": "Matches not found."}), 404
@@ -151,8 +150,8 @@ def delete_matches(tournament_id):
     return jsonify({"message": "Matches deleted successfully."})
 
 
-@routes_bp.route("/event/<int:tournament_id>/players", methods=['GET'])
-def get_players_by_event(tournament_id):
+@routes_bp.route("/tournament/<int:tournament_id>/players", methods=['GET'])
+def get_players_by_tournament(tournament_id):
     participants = models.db.session.query(models.Player).join(models.PlayerTournament)\
         .filter_by(models.PlayerTournament.event_id == tournament_id).all()
     players = []
