@@ -1,4 +1,5 @@
 from flask import jsonify, request, Blueprint
+from sqlalchemy.orm import joinedload
 import models
 
 
@@ -13,7 +14,27 @@ def get_tournament():
         tournament_data = {
             'id': event.id,
             'name': event.name,
-            'date': event.date.strftime("%Y-%m-%dT%H:%M")
+            'date': event.date.strftime("%Y-%m-%dT%H:%M"),
+            'players': [player.name for player in event.players]
+        }
+        event_list.append(event_data)
+    return jsonify(event_list)
+
+
+@routes_bp.route("/events-with-players", methods=['GET'])
+def get_events_with_players():
+    events = (
+        models.db.session.query(models.Event)
+        .options(joinedload(models.Event.players))  # Load the associated players
+        .all()
+    )
+    event_list = []
+    for event in events:
+        event_data = {
+            'id': event.id,
+            'name': event.name,
+            'date': event.date.strftime("%Y-%m-%dT%H:%M"),
+            'players': [{'id': player.id, 'name': player.name} for player in event.players]
         }
         tournament_list.append(tournament_data)
     return jsonify(tournament_list)
@@ -67,7 +88,11 @@ def get_players():
 @routes_bp.route("/player", methods=['POST'])
 def add_player():
     added_player = request.get_json()
-    player = models.Player(name=added_player["name"])
+    event_list = []
+    for id in added_player["events"]:
+        event = models.db.session.query(models.Event).get(id)
+        event_list.append(event)
+    player = models.Player(name=added_player["name"], events=event_list)
     models.db.session.add(player)
     models.db.session.commit()
     return jsonify({"message": "Player successfully added."})
@@ -157,10 +182,10 @@ def get_players_by_tournament(tournament_id):
     players = []
     if not participants:
         return jsonify({"message": "Players not found."}), 404
-    for player in participants:
+    for player in players:
         player_data = {
             "id": player.id,
             "name": player.name
         }
-        players.append(player_data)
-    return jsonify(players)
+        data.append(player_data)
+    return jsonify(data)
