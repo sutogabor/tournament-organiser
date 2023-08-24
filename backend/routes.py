@@ -97,12 +97,12 @@ def get_players():
 @routes_bp.route("/player", methods=['POST'])
 def add_player():
     added_player = request.get_json()
-    event_list = []
-    for event_id in added_player["events"]:
-        event = models.Tournament.query.get(event_id)
-        if event:
-            event_list.append(event)
-    player = models.Player(name=added_player["name"], events=event_list)
+    tournament_list = []
+    for tournament_id in added_player["events"]:
+        tournament = models.Tournament.query.get(tournament_id)
+        if tournament:
+            tournament_list.append(tournament)
+    player = models.Player(name=added_player["name"], events=tournament_list)
     models.db.session.add(player)
     models.db.session.commit()
     return jsonify({"message": "Player successfully added."})
