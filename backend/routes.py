@@ -132,7 +132,7 @@ def get_player_by_id(player_id):
 
 @routes_bp.route("/matches", methods=['GET'])
 def get_matches():
-    matches = models.db.session.query(models.Match).all()
+    matches = models.Match.query.all()
     matches_list = []
     for match in matches:
         match_data = {
@@ -140,7 +140,7 @@ def get_matches():
             "player_1_id": match.player_1_id,
             "player_2_id": match.player_2_id,
             "event_id": match.event_id,
-            "winner": match.winner
+            "winner_id": match.winner_id
         }
         matches_list.append(match_data)
     return jsonify(matches_list)
