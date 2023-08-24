@@ -7,18 +7,27 @@ routes_bp = Blueprint("routes", __name__)
 
 
 @routes_bp.route("/tournament", methods=['GET'])
-def get_tournament():
-    tournaments = models.db.session.query(models.Tournament).all()
+def get_tournaments():
+    tournaments = models.Tournament.query.all()
     tournament_list = []
-    for event in tournaments:
+    for tournament in tournaments:
         tournament_data = {
-            'id': event.id,
-            'name': event.name,
-            'date': event.date.strftime("%Y-%m-%dT%H:%M"),
-            'players': [player.name for player in event.players]
+            'id': tournament.id,
+            'name': tournament.name,
+            'date': tournament.date.strftime("%Y-%m-%dT%H:%M"),
+            'players': [player.name for player in tournament.players],
+            'matches': [
+                {
+                    'match_id': match.id,
+                    'player_1': match.player_1.name,
+                    'player_2': match.player_2.name,
+                    'winner': match.winner.name if match.winner else None
+                }
+                for match in tournament.matches
+            ]
         }
-        event_list.append(event_data)
-    return jsonify(event_list)
+        tournament_list.append(tournament_data)
+    return jsonify(tournament_list)
 
 
 @routes_bp.route("/events-with-players", methods=['GET'])
