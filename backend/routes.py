@@ -168,7 +168,8 @@ def add_match():
         player_1_id=added_match["player_1_id"],
         player_2_id=added_match["player_2_id"],
         event_id=added_match["event_id"],
-        winner=None)
+        winner_id=None
+    )
     models.db.session.add(match)
     models.db.session.commit()
     return jsonify({"message": "Match successfully added."})
