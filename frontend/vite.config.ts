@@ -6,9 +6,9 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      '/event': 'http://127.0.0.1:5000',
-      '/player': 'http://127.0.0.1:5000',
-      '/matches': 'http://127.0.0.1:5000',
+      '/tournament': 'http://127.0.0.1:8080',
+      '/player': 'http://127.0.0.1:8080',
+      '/matches': 'http://127.0.0.1:8080',
     },
   },
 })
