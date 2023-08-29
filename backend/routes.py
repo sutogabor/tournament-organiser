@@ -1,6 +1,7 @@
 from flask import jsonify, request, Blueprint
 from sqlalchemy.orm import joinedload
 import models
+from models import Tournament
 
 
 routes_bp = Blueprint("routes", __name__)
@@ -98,11 +99,11 @@ def get_players():
 def add_player():
     added_player = request.get_json()
     tournament_list = []
-    for tournament_id in added_player["events"]:
-        tournament = models.Tournament.query.get(tournament_id)
+    for tournament_id in added_player["tournaments"]:
+        tournament = models.db.session.query(Tournament).get(tournament_id)
         if tournament:
             tournament_list.append(tournament)
-    player = models.Player(name=added_player["name"], events=tournament_list)
+    player = models.Player(name=added_player["name"], tournaments=tournament_list)
     models.db.session.add(player)
     models.db.session.commit()
     return jsonify({"message": "Player successfully added."})
