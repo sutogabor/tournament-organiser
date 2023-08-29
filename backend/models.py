@@ -14,20 +14,20 @@ class Player(Base):
     tournaments = relationship("Tournament", secondary="player_tournament", back_populates="players")
 
 
-class PlayerTournament(Base):
-    __tablename__ = 'player_tournament'
-    id = Column(Integer, Sequence('player_tournament_id_seq', start=1, increment=1), primary_key=True, autoincrement=True)
-    player_id = Column(Integer, ForeignKey('players.id'), primary_key=True)
-    tournament_id = Column(Integer, ForeignKey('tournaments.id'), primary_key=True)
-
-
-class Tournament(db.Model):
+class Tournament(Base):
     __tablename__ = "tournaments"
     id = Column(Integer, primary_key=True)
     name = Column(String(255))
     date = Column(DateTime)
     players = relationship("Player", secondary="player_tournament", back_populates="tournaments")
-    matches = relationship("Match", back_populates="tournaments")
+    matches = relationship("Match")
+
+
+class PlayerTournament(Base):
+    __tablename__ = 'player_tournament'
+    id = Column(Integer, Sequence('player_tournament_id_seq', start=1, increment=1), primary_key=True, autoincrement=True)
+    player_id = Column(Integer, ForeignKey('players.id'), primary_key=True)
+    tournament_id = Column(Integer, ForeignKey('tournaments.id'), primary_key=True)
 
 
 class Match(Base):
