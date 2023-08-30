@@ -11,14 +11,7 @@ class Player(Base):
     __tablename__ = "players"
     id = Column(Integer, primary_key=True)
     name = Column(String(255))
-    events = relationship("Event", secondary="player_event", back_populates="players")
-
-
-class PlayerTournament(Base):
-    __tablename__ = 'player_tournament'
-    id = Column(Integer, Sequence('player_event_id_seq', start=1, increment=1), primary_key=True, autoincrement=True)
-    player_id = Column(Integer, ForeignKey('players.id'), primary_key=True)
-    event_id = Column(Integer, ForeignKey('events.id'), primary_key=True)
+    tournaments = relationship("Tournament", secondary="player_tournament", back_populates="players")
 
 
 class Tournament(Base):
@@ -26,14 +19,21 @@ class Tournament(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String(255))
     date = Column(DateTime)
-    players = relationship("Player", secondary="player_event", back_populates="events")
-    matches = relationship("Match", back_populates="event")
+    players = relationship("Player", secondary="player_tournament", back_populates="tournaments")
+    matches = relationship("Match")
+
+
+class PlayerTournament(Base):
+    __tablename__ = 'player_tournament'
+    id = Column(Integer, Sequence('player_tournament_id_seq', start=1, increment=1), primary_key=True, autoincrement=True)
+    player_id = Column(Integer, ForeignKey('players.id'), primary_key=True)
+    tournament_id = Column(Integer, ForeignKey('tournaments.id'), primary_key=True)
 
 
 class Match(Base):
     __tablename__ = "matches"
     id = Column(Integer, primary_key=True)
-    event_id = Column(Integer, ForeignKey("events.id"))
+    tournament_id = Column(Integer, ForeignKey("tournaments.id"))
     player_1_id = Column(Integer, ForeignKey("players.id"))
     player_2_id = Column(Integer, ForeignKey("players.id"))
     winner_id = Column(Integer, ForeignKey("players.id"), nullable=True)
@@ -42,7 +42,7 @@ class Match(Base):
     tournament_round_text = Column(String(10))
     next_match_id = Column(Integer, ForeignKey("matches.id"), nullable=True)
 
-    event = relationship("Event", back_populates="matches")
+    tournament = relationship("Tournament", back_populates="matches")
     player_1 = relationship("Player", foreign_keys=[player_1_id])
     player_2 = relationship("Player", foreign_keys=[player_2_id])
     winner = relationship("Player", foreign_keys=[winner_id])
