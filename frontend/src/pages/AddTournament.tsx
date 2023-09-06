@@ -24,7 +24,7 @@ const AddTournament: React.FC = () => {
   };
 
   const handleBackClick = () => {
-    window.location.href = '/add-tournament'; // Replace '/original-page' with the actual URL of your original page
+    window.location.href = '/add-tournament';
   };
 
   return (
