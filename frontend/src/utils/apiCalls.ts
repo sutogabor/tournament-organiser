@@ -7,13 +7,13 @@ export async function apiGet(URL: string) {
             }
         });
         if (response.ok) {
-            return response;
+            return await response.json();
         } else {
-            console.log("Bad response at apiCalls.apiGet()");
-            console.log(response.headers);
+            throw new Error("Bad response at apiCalls.apiGet()");
         }
     } catch (error) {
-        console.log(error);
+        console.error(error);
+        throw error;
     }
 }
 
