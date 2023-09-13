@@ -7,7 +7,7 @@ interface EventDetailsButtonProps {
 
 function EventDetailsButton({ eventId }: EventDetailsButtonProps) {
     return (
-        <Link to={`/event/${eventId}`} className="event-details-button">
+        <Link to={`/tournament/${eventId}`} className="event-details-button">
             View Details
         </Link>
     );

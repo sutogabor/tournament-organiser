@@ -17,7 +17,7 @@ function App() {
                 <Header />
                 <Routes>
                     <Route path="/" element={<HomePage />}/>
-                    <Route path="/tournament-details/:id" element={ <TournamentDetails />}/>
+                    <Route path="/tournament/:id" element={ <TournamentDetails />}/>
                     <Route path="/add-tournament" element={ <AddTournament />}/>
                     <Route path="/tournaments" element={ <Tournaments /> }/>
                     <Route path="/add-player" element={ <AddPlayer /> }/>
