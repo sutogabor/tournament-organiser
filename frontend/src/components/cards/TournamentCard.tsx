@@ -1,18 +1,15 @@
 import React from "react";
-import {Event} from "../../interfaces/Event.ts";
-import EventDetailsButton from "../buttons/EventDetailsButton.tsx";
+import { Event } from "../../interfaces/Event.ts";
 import DeleteButton from "../buttons/DeleteButton.tsx";
 import useDeleteEvent from "../../hooks/useDeleteEvent.tsx";
-import "../../styles/tournament-card.css"
-
+import "../../styles/tournament-card.css";
+import { Link } from 'react-router-dom';
 
 export interface EventCardProps {
     event: Event;
 }
 
-
-const EventCard: React.FC<EventCardProps> = ({ event}) => {
-
+const TournamentCard: React.FC<EventCardProps> = ({ event }) => {
     const { deleteEvent, isLoading } = useDeleteEvent();
     const eventDate = new Date(event.date);
     const formattedDate = `${eventDate.getFullYear()}.${(eventDate.getMonth() + 1)
@@ -32,11 +29,13 @@ const EventCard: React.FC<EventCardProps> = ({ event}) => {
                 </div>
             </div>
             <div className="card-buttons">
-                <EventDetailsButton eventId={event.id} />
-                <DeleteButton onDelete={() => deleteEvent(event.id)} isLoading={isLoading}/>
+                <Link to={`/tournament/${event.id}`} className="event-details-link">
+                    Event Details
+                </Link>
+                <DeleteButton onDelete={() => deleteEvent(event.id)} isLoading={isLoading} />
             </div>
         </div>
     );
 };
 
-export default EventCard;
+export default TournamentCard;
