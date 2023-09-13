@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { Event } from '../interfaces/Event.ts';
 import { useParams } from 'react-router-dom';
 
-interface EventDetailsParams {
+interface TournamentDetailsParams {
   id: string;
 }
 
-const EventDetails: React.FC = () => {
+const TournamentDetails: React.FC = () => {
   const [details, setDetails] = useState<Event | undefined>();
-  const { id } = useParams<EventDetailsParams>();
+  const { id } = useParams<TournamentDetailsParams>();
 
   const fetchEvent = async () => {
     try {
@@ -48,4 +48,4 @@ const EventDetails: React.FC = () => {
   );
 };
 
-export default EventDetails;
+export default TournamentDetails;
