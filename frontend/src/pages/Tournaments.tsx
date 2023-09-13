@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import EventCard from "../components/cards/EventCard.tsx";
+import TournamentCard from "../components/cards/TournamentCard.tsx";
 import {Event} from "../interfaces/Event.ts";
 import {apiGet} from "../utils/apiCalls.ts";
 import "../styles/tournaments-page.css"
@@ -120,7 +120,7 @@ const Tournaments: React.FC = () => {
                         <h2>Ongoing Tournaments</h2>
                         <div className="event-cards">
                             {displayedOngoingEvents.map(event => (
-                                <EventCard key={event.id} event={event}/>
+                                <TournamentCard key={event.id} event={event}/>
                             ))}
                         </div>
                     </div>
@@ -130,7 +130,7 @@ const Tournaments: React.FC = () => {
                         <h2>Upcoming Tournaments</h2>
                         <div className="event-cards">
                             {displayedUpcomingEvents.map(event => (
-                                <EventCard key={event.id} event={event}/>
+                                <TournamentCard key={event.id} event={event}/>
                             ))}
                         </div>
                     </div>

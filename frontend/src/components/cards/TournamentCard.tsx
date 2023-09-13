@@ -1,6 +1,6 @@
 import React from "react";
 import {Event} from "../../interfaces/Event.ts";
-import EventDetailsButton from "../buttons/EventDetailsButton.tsx";
+import TournamentDetailsButton from "../buttons/TournamentDetailsButton.tsx";
 import DeleteButton from "../buttons/DeleteButton.tsx";
 import useDeleteEvent from "../../hooks/useDeleteEvent.tsx";
 import "../../styles/tournament-card.css"
@@ -32,7 +32,7 @@ const TournamentCard: React.FC<EventCardProps> = ({ event}) => {
                 </div>
             </div>
             <div className="card-buttons">
-                <EventDetailsButton eventId={event.id} />
+                <TournamentDetailsButton eventId={event.id} />
                 <DeleteButton onDelete={() => deleteEvent(event.id)} isLoading={isLoading}/>
             </div>
         </div>

@@ -5,7 +5,7 @@ interface EventDetailsButtonProps {
     eventId: number; // or whatever type your event IDs are
 }
 
-function EventDetailsButton({ eventId }: EventDetailsButtonProps) {
+function TournamentDetailsButton({ eventId }: EventDetailsButtonProps) {
     return (
         <Link to={`/tournament/${eventId}`} className="event-details-button">
             View Details
@@ -13,4 +13,4 @@ function EventDetailsButton({ eventId }: EventDetailsButtonProps) {
     );
 }
 
-export default EventDetailsButton;
+export default TournamentDetailsButton;
