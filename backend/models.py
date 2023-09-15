@@ -9,8 +9,13 @@ db = SQLAlchemy()
 class Player(db.Model):
     __tablename__ = "players"
     id = Column(Integer, primary_key=True)
+    result_text = Column(String(20), nullable=True)
+    is_winner = Column(Boolean, default=False)
+    status = Column(String(20), nullable=True)
     name = Column(String(255))
+
     tournaments = relationship("Tournament", secondary="player_tournament", back_populates="players")
+    matches = relationship("Match", secondary="match_participants", back_populates="participants")
 
 
 class Tournament(db.Model):
@@ -41,6 +46,7 @@ class Match(db.Model):
     tournament_round_text = Column(String(10))
     next_match_id = Column(Integer, ForeignKey("matches.id"), nullable=True)
 
+    participants = relationship("Player", secondary="match_participants", back_populates="matches")
     tournament = relationship("Tournament", back_populates="matches")
     player_1 = relationship("Player", foreign_keys=[player_1_id])
     player_2 = relationship("Player", foreign_keys=[player_2_id])
