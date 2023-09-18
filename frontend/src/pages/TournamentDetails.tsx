@@ -1,6 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import { Event } from '../interfaces/Event.ts';
-import { useParams } from 'react-router-dom';
+import {SingleEliminationBracket, Match, SVGViewer} from '@g-loot/react-tournament-brackets';
 
 interface TournamentDetailsParams {
   id: string;
@@ -35,17 +33,24 @@ const TournamentDetails: React.FC = () => {
     fetchEvent();
   }, []);
 
-  if (details === undefined) {
-    return <div>LOOOOAAADIIIING</div>;
-  }
+const TournamentDetails = () => {
+    console.log("TournamentDetails component rendered");
+    console.log("matchesData:", matchesData);
 
-  return (
-    <div>
-      <h1>{details.name}</h1>
-      <h3>{details.date}</h3>
-      <h3>Blalalblaa</h3>
-    </div>
-  );
+    return (
+        <div>
+            <h2>Bracket Details</h2>
+            <SingleEliminationBracket
+                matches={matchesData}
+                matchComponent={Match}
+                svgWrapper={({ children, ...props }) => (
+                    <SVGViewer width={500} height={500} {...props}>
+                        {children}
+                    </SVGViewer>
+                )}
+            />
+        </div>
+    );
 };
 
 export default TournamentDetails;
