@@ -1,30 +1,64 @@
 import {useState, useEffect, ChangeEvent} from 'react';
 import './../styles/add-player-page.css';
 import {apiGet, apiPost} from "../utils/apiCalls.ts";
+import {Event} from "../interfaces/Event.ts";
 
 const PlayerRegistrationPage = () => {
     const [playerName, setPlayerName] = useState('');
     const [selectedTournaments, setSelectedTournaments] = useState<number[]>([]);
     const [tournamentList, setTournamentList] = useState<{ id: number; name: string }[]>([]);
 
-
-    async function getData() {
-        try {
-            const response = await apiGet("https://localhost:8080/event");
-            if (response && response.ok) {
-                const data = await response.json();
-                return data;
-            } else {
-                console.log("Bad response at AddPlayer page useEffect!")
-            }
-        } catch (error) {
-            console.log(error)
+    const testData: Event[] = [
+        {
+            "date": "2022-12-27T18:00",
+            "id": 2,
+            "name": "FIFA"
+        },
+        {
+            "date": "2024-12-27T18:00",
+            "id": 3,
+            "name": "TEKKEN"
+        },
+        {
+            "date": "2022-12-27T18:00",
+            "id": 5,
+            "name": "Smash Bros"
+        },
+        {
+            "date": "2024-08-14T13:53",
+            "id": 6,
+            "name": "Wind Jammers"
+        },
+        {
+            "date": "2024-08-14T13:53",
+            "id": 7,
+            "name": "Mario Kart"
+        },
+        {
+            "date": "2023-08-24T13:53",
+            "id": 8,
+            "name": "Foosball"
         }
-    }
+    ]
+
+    // async function getData() {
+    //     try {
+    //         const response = await apiGet("https://localhost:8080/event");
+    //         if (response && response.ok) {
+    //             const data = await response.json();
+    //             return data;
+    //         } else {
+    //             console.log("Bad response at AddPlayer page useEffect!")
+    //         }
+    //     } catch (error) {
+    //         console.log(error)
+    //     }
+    // }
 
 
     useEffect(() => {
-        getData().then(data => setTournamentList(data))
+        // getData().then(data => setTournamentList(data))
+        setTournamentList(testData)
     }, []);
 
     const handlePlayerNameChange = (event: ChangeEvent<HTMLInputElement>) => {

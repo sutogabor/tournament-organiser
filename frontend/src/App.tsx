@@ -8,7 +8,6 @@ import AddPlayer from './pages/AddPlayer.tsx';
 import Footer from './components/Footer.tsx';
 import AddTournament from "./pages/AddTournament.tsx";
 
-// Define a layout component that includes the header and footer
 const Layout = ({ children }: { children: React.ReactNode }) => (
     <div>
         <Header />
@@ -19,16 +18,20 @@ const Layout = ({ children }: { children: React.ReactNode }) => (
 
 function App() {
     return (
-        <Router>
-            <Routes>
-                <Route path="/" element={<Layout><HomePage /></Layout>} />
-                <Route path="/event-details/:id" element={<Layout><EventDetails /></Layout>} />
-                <Route path="/add-tournament" element={<Layout><AddTournament /></Layout>} />
-                <Route path="/tournaments" element={<Layout><Tournaments /></Layout>} />
-                <Route path="/add-player" element={<Layout><AddPlayer /></Layout>} />
-            </Routes>
-        </Router>
-    );
+        <div>
+            <Router>
+                <Header />
+                <Routes>
+                    <Route path="/" element={<HomePage />}/>
+                    <Route path="/tournament/:id" element={ <TournamentDetails />}/>
+                    <Route path="/add-tournament" element={ <AddTournament />}/>
+                    <Route path="/tournaments" element={ <Tournaments /> }/>
+                    <Route path="/add-player" element={ <AddPlayer /> }/>
+                </Routes>
+                <Footer/>
+            </Router>
+        </div>
+    )
 }
 
 export default App;
