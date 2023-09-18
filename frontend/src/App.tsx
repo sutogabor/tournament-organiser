@@ -1,16 +1,22 @@
-import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
-import Header from "./components/Header.tsx";
-import HomePage from "./pages/HomePage.tsx";
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Header from './components/Header.tsx';
+import HomePage from './pages/HomePage.tsx';
+import Tournaments from './pages/Tournaments.tsx';
+import EventDetails from './pages/EventDetails.tsx';
+import AddPlayer from './pages/AddPlayer.tsx';
+import Footer from './components/Footer.tsx';
 import AddTournament from "./pages/AddTournament.tsx";
-import Tournaments from "./pages/Tournaments.tsx";
-import TournamentDetails from "./pages/TournamentDetails.tsx";
-import AddPlayer from "./pages/AddPlayer.tsx";
-import Footer from "./components/Footer.tsx";
 
+const Layout = ({ children }: { children: React.ReactNode }) => (
+    <div>
+        <Header />
+        {children}
+        <Footer />
+    </div>
+);
 
 function App() {
-
-
     return (
         <div>
             <Router>
@@ -28,5 +34,4 @@ function App() {
     )
 }
 
-
-export default App
+export default App;

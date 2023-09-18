@@ -42,3 +42,20 @@ button {
 button:hover {
     background-color: #0056b3;
 }
+
+.success-message {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.success-message p {
+    font-size: 24px;
+}
+
+.success-message button {
+    margin-top: 20px;
+    font-size: 18px;
+}
+
