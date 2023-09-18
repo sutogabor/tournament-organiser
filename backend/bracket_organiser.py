@@ -132,7 +132,6 @@ def organize_matches(player_list, tournament_id):
     # Organize preround matches
     round_id, match_id = 0, 1
     preround_players_copy = preround_players.copy()
-    print(f"THIS IS THE COUNT {first_round_bracket_count}")
     while len(preround_players_copy) >= 2:
         if empty_first_round_matches_count > 0:
             for count in range(empty_first_round_matches_count):
@@ -162,7 +161,6 @@ def organize_matches(player_list, tournament_id):
                 next_match_id = int(match_id / 2)
             else:
                 next_match_id = int((match_id + 1) / 2)
-        # next_match_id = match_id if match_id == 1 else int((match_id + (match_id % 2) / 2))
         if player_list:
             matches.append(create_match(tournament_id, round_id, match_id, next_match_id=next_match_id,
                                         player_1=player_list.pop(0)))
@@ -210,3 +208,5 @@ for game in organized_matches:
 # match_id if match_id == 1 else (match_id // 2 if match_id % 2 == 0 else (match_id + 1) // 2)
 
 # Increasing match|_id with 0.5 in every iteration, and rounding it down, should solve next_match_id issues.
+# Last match id has to be null. When creating advanced round matches check if it's the last match.
+
