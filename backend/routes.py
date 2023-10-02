@@ -123,16 +123,11 @@ def get_player_by_id(player_id):
 @routes_bp.route("/matches", methods=['GET'])
 def get_matches():
     matches = models.Match.query.all()
-    matches_list = []
-    for match in matches:
-        match_data = {
-            "id": match.id,
-            "player_1_id": match.player_1_id,
-            "player_2_id": match.player_2_id,
-            "event_id": match.event_id,
-            "winner_id": match.winner_id
-        }
-        matches_list.append(match_data)
+    matches_list = [{'id': match.id,
+                     'player_1_id': match.participants[0].id if match.participants and len(match.participants) >= 1 else None,
+                     'player_2_id': match.participants[1].id if match.participants and len(match.participants) >= 2 else None,
+                     'event_id': match.tournament_id,
+                     'winner_id': match.winner_id} for match in matches]
     return jsonify(matches_list)
 
 
