@@ -84,7 +84,7 @@ def get_players():
     return jsonify(player_list)
 
 
-@routes_bp.route("/player", methods=['POST'])
+@routes_bp.route("/players", methods=['POST'])
 def add_player():
     added_player = request.get_json()
     tournament_list = []
@@ -98,7 +98,7 @@ def add_player():
     return jsonify({"message": "Player successfully added."})
 
 
-@routes_bp.route("/player/<int:player_id>", methods=['DELETE'])
+@routes_bp.route("/players/<int:player_id>", methods=['DELETE'])
 def delete_player_by_id(player_id):
     player = models.db.session.query(models.Player).get(player_id)
     if not player:
@@ -108,9 +108,9 @@ def delete_player_by_id(player_id):
     return jsonify({"message": "Event deleted successfully."})
 
 
-@routes_bp.route("/player/<int:player_id>", methods=['GET'])
+@routes_bp.route("/players/<int:player_id>", methods=['GET'])
 def get_player_by_id(player_id):
-    player = models.db.session.query(models.Player).get(player_id)
+    player = models.Player.query.get(player_id)
     if not player:
         return jsonify({"message": "Player not found."}), 404
     player_data = {
