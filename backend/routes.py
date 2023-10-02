@@ -150,9 +150,7 @@ def get_match_by_id(match_id):
 def add_match():
     added_match = request.get_json()
     match = models.Match(
-        player_1_id=added_match["player_1_id"],
-        player_2_id=added_match["player_2_id"],
-        event_id=added_match["event_id"],
+        tournament_id=added_match["event_id"],
         winner_id=None
     )
     models.db.session.add(match)
