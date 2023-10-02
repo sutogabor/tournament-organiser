@@ -6,7 +6,7 @@ import models
 routes_bp = Blueprint("routes", __name__)
 
 
-@routes_bp.route("/tournament", methods=['GET'])
+@routes_bp.route("/tournaments", methods=['GET'])
 def get_tournaments():
     tournaments = models.Tournament.query.all()
     tournament_list = []
@@ -19,8 +19,8 @@ def get_tournaments():
             'matches': [
                 {
                     'match_id': match.id,
-                    'player_1': match.player_1.name,
-                    'player_2': match.player_2.name,
+                    'player_1': match.participants[0].name if match.participants and len(match.participants) >= 1 else None,
+                    'player_2': match.participants[1].name if match.participants and len(match.participants) >= 2 else None,
                     'winner': match.winner.name if match.winner else None
                 }
                 for match in tournament.matches
