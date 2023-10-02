@@ -32,18 +32,14 @@ def get_tournaments():
 
 @routes_bp.route("/tournaments-with-players", methods=['GET'])
 def get_tournaments_with_players():
-    events = (
-        models.db.session.query(models.Tournament)
-        .options(joinedload(models.Tournament.players))
-        .all()
-    )
+    tournaments = models.Tournament.query.options(models.db.joinedload(models.Tournament.players)).all()
     tournament_list = []
-    for event in events:
+    for tournament in tournaments:
         tournament_data = {
-            'id': event.id,
-            'name': event.name,
-            'date': event.date.strftime("%Y-%m-%dT%H:%M"),
-            'players': [{'id': player.id, 'name': player.name} for player in event.players]
+            'id': tournament.id,
+            'name': tournament.name,
+            'date': tournament.date.strftime("%Y-%m-%dT%H:%M"),
+            'players': [{'id': player.id, 'name': player.name} for player in tournament.players]
         }
         tournament_list.append(tournament_data)
     return jsonify(tournament_list)
