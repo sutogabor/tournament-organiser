@@ -77,16 +77,10 @@ def get_tournament_by_id(tournament_id):
     return jsonify(tournament_data)
 
 
-@routes_bp.route("/player", methods=['GET'])
+@routes_bp.route("/players", methods=['GET'])
 def get_players():
-    players = models.db.session.query(models.Player).all()
-    player_list = []
-    for player in players:
-        player_data = {
-            'id': player.id,
-            'name': player.name
-        }
-        player_list.append(player_data)
+    players = models.Player.query.all()
+    player_list = [{'id': player.id, 'name': player.name} for player in players]
     return jsonify(player_list)
 
 
