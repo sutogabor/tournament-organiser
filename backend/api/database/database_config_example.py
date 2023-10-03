@@ -11,5 +11,3 @@ url_object = URL.create(
 
 engine = create_engine(url_object)
 base = declarative_base()
-db_name = "my_sqlname:///my_dbname.db"
-session = Session
