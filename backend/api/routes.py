@@ -171,16 +171,9 @@ def delete_matches_by_tournament_id(tournament_id):
 
 
 @routes_bp.route("/tournament/<int:tournament_id>/players", methods=['GET'])
-def get_players_by_tournament(tournament_id):
-    participants = models.db.session.query(models.Player).join(models.PlayerTournament).filter(
-        models.PlayerTournament.event_id == tournament_id).all()
-    players = []
-    if not participants:
-        return jsonify({"message": "Players not found."}), 404
-    for player in participants:
-        player_data = {
-            "id": player.id,
-            "name": player.name
-        }
-        players.append(player_data)
+def get_players_by_tournament_id(tournament_id):
+    tournament = Tournament.query.get(tournament_id)
+    if not tournament:
+        return jsonify({"message": "Tournament not found."}), 404
+    players = [{'id': player.id, 'name': player.name} for player in tournament.players]
     return jsonify(players)
