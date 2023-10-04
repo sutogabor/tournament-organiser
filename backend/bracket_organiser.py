@@ -1,9 +1,6 @@
 import math
-import random
 from datetime import datetime
-
-import models
-from models import Player, Match, Tournament, db
+from models import Player, Match
 
 mock_player_list = [
     {
@@ -96,14 +93,34 @@ mock_player_list = [
         "is_winner": False,
         "status": None,
         "name": "Ede"
+    },
+    {
+        "id": "9oi9ce1a-5566-3353-856c-9a3620c0531b",
+        "result_text": None,
+        "is_winner": False,
+        "status": None,
+        "name": "Soma"
     }
-]
+    # {
+    #     "id": "9oi9ce1a-8888-3353-856c-9a3620c0531b",
+    #     "result_text": None,
+    #     "is_winner": False,
+    #     "status": None,
+    #     "name": "Erik"
+    # },
+    # {
+    #     "id": "9oi9ce1a-6543-3353-856c-9a3620c0531b",
+    #     "result_text": None,
+    #     "is_winner": False,
+    #     "status": None,
+    #     "name": "Csilla"
+    # }
+]  # 14
 
 player_objects = []
 
 for player_data in mock_player_list:
     player = Player(**player_data)
-    # Append the Player object to the list
     player_objects.append(player)
 
 
@@ -121,92 +138,55 @@ def create_match(tournament_id, round_id, match_id, player_1=None, player_2=None
     )
 
 
-def organize_matches(player_list, tournament_id):
+def create_brackets(player_list, tournament_id):
     matches = []
-    first_round_bracket_count = 2 ** math.floor(math.log2(len(player_list)))
-    preround_players = random.sample(player_list, len(player_list) - (first_round_bracket_count * 2 - len(player_list)))
-    empty_first_round_matches_count = int(len(preround_players) / 2 - first_round_bracket_count / 2)
-    player_list = [player for player in player_list if player not in preround_players]
-    preround_match_count = 0
+    match_counter = (2 ** math.ceil(math.log2(len(player_list)))) / 2  # 8
+    opponent_count = len(player_objects) - match_counter
+    match_id = 1
+    next_match_id = 1
 
-    # Organize preround matches
-    round_id, match_id = 0, 1
-    preround_players_copy = preround_players.copy()
-    while len(preround_players_copy) >= 2:
-        if empty_first_round_matches_count > 0:
-            for count in range(empty_first_round_matches_count):
-                matches.append(create_match(tournament_id, round_id, match_id,
-                                            next_match_id=match_id if match_id <= int(first_round_bracket_count/2)
-                                            else int(first_round_bracket_count/2),
-                                            player_1=preround_players_copy.pop(0),
-                                            player_2=preround_players_copy.pop(0)))
-        # if match_id == 1:
-        #     next_match_id = match_id
-        # else:
-        #     if match_id % 2 == 0:
-        #         next_match_id = int(match_id / 2)
-        #     else:
-        #         next_match_id = int((match_id + 1) / 2)
-
-        preround_match_count += 1
-        match_id += 1
-
-    # Organize first round matches
-    round_id, match_id = 1, 1
-    for count in range(int(first_round_bracket_count / 2)):
-        if match_id == 1:
-            next_match_id = match_id
-        else:
-            if match_id % 2 == 0:
-                next_match_id = int(match_id / 2)
-            else:
-                next_match_id = int((match_id + 1) / 2)
-        if player_list:
-            matches.append(create_match(tournament_id, round_id, match_id, next_match_id=next_match_id,
-                                        player_1=player_list.pop(0)))
+    # First round matches
+    for match in range(int(match_counter)):
+        if opponent_count > 0:
+            matches.append(create_match(tournament_id, round_id=1, match_id=match_id,
+                                        next_match_id=int(next_match_id),
+                                        player_1=player_list.pop(0),
+                                        player_2=player_list.pop(0)))
+            opponent_count -= 1
             match_id += 1
+            next_match_id += 0.5
         else:
-            matches.append(create_match(tournament_id, round_id, match_id, next_match_id=next_match_id))
+            participant = player_list.pop(0)
+            participant.status = 'WALK_OVER'
+            matches.append(create_match(tournament_id=tournament_id, round_id=1, match_id=match_id,
+                                        next_match_id=int(next_match_id),
+                                        player_1=participant))
             match_id += 1
-    for number in range(int(len(player_list) / 2)):
-        if match_id == 1:
-            next_match_id = match_id
-        else:
-            if match_id % 2 == 0:
-                next_match_id = int(match_id / 2)
-            else:
-                next_match_id = int((match_id + 1) / 2)
-        matches.append(create_match(tournament_id, round_id, match_id, next_match_id=next_match_id,
-                                    player_1=player_list.pop(0),
-                                    player_2=player_list.pop(0)))
-        match_id += 1
+            next_match_id += 0.5
+    match_counter /= 2
 
-    # Organize advanced round matches
-    round_id, match_id = 2, 1
-    while first_round_bracket_count >= 2:
+    # Advanced round matches
+    round_id = 2
+    next_match_id = 1
+    while match_counter > 1:
         match_id = 1
-        for _ in range(round(round(first_round_bracket_count) / 4)):
-            if match_id == 1:
-                next_match_id = match_id
-            else:
-                if match_id % 2 == 0:
-                    next_match_id = int(match_id / 2)
-                else:
-                    next_match_id = int((match_id + 1) / 2)
-            matches.append(create_match(tournament_id, round_id, match_id, next_match_id=next_match_id))
+        for count in range(int(match_counter)):
+            matches.append(create_match(tournament_id=tournament_id, round_id=round_id, match_id=match_id,
+                                        next_match_id=int(next_match_id)))
             match_id += 1
-        first_round_bracket_count = first_round_bracket_count / 2
+            next_match_id += 0.5
         round_id += 1
+        match_counter /= 2
+
+    # Create final match
+    final_match = create_match(tournament_id=tournament_id, round_id=round_id, match_id=1,
+                               next_match_id=int(next_match_id))
+    final_match.next_match_id = None
+    matches.append(final_match)
 
     return matches
 
 
-organized_matches = organize_matches(player_objects, 1)
-for game in organized_matches:
+organised_matches = create_brackets(player_objects, 1)
+for game in organised_matches:
     print(game)
-
-# match_id if match_id == 1 else (match_id // 2 if match_id % 2 == 0 else (match_id + 1) // 2)
-
-# Increasing match|_id with 0.5 in every iteration, and rounding it down, should solve next_match_id issues.
-# Last match id has to be null. When creating advanced round matches check if it's the last match.
-
