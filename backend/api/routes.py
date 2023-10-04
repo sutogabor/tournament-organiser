@@ -150,14 +150,12 @@ def get_match_by_id(match_id):
 @routes_bp.route("/matches", methods=['POST'])
 def add_match():
     added_match = request.get_json()
-    match = models.Match(
-        player_1_id=added_match["player_1_id"],
-        player_2_id=added_match["player_2_id"],
-        event_id=added_match["event_id"],
+    match = Match(
+        tournament_id=added_match["event_id"],
         winner_id=None
     )
-    models.db.session.add(match)
-    models.db.session.commit()
+    db.session.add(match)
+    db.session.commit()
     return jsonify({"message": "Match successfully added."})
 
 
