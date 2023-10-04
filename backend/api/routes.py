@@ -161,12 +161,12 @@ def add_match():
 
 @routes_bp.route("/matches/<int:tournament_id>", methods=['DELETE'])
 def delete_matches_by_tournament_id(tournament_id):
-    matches = models.Match.query.filter_by(event_id=tournament_id).all()
+    matches = Match.query.filter_by(tournament_id=tournament_id).all()
     if not matches:
         return jsonify({"message": "Matches not found."}), 404
     for match in matches:
-        models.db.session.delete(match)
-    models.db.session.commit()
+        db.session.delete(match)
+    db.session.commit()
     return jsonify({"message": "Matches deleted successfully."})
 
 
