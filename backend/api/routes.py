@@ -49,9 +49,9 @@ def get_tournaments_with_players():
 @routes_bp.route("/tournament", methods=['POST'])
 def add_tournament():
     added_tournament = request.get_json()
-    tournament = models.Tournament(name=added_tournament["name"], date=added_tournament['date'])
-    models.db.session.add(tournament)
-    models.db.session.commit()
+    tournament = Tournament(name=added_tournament["name"], date=added_tournament['date'])
+    db.session.add(tournament)
+    db.session.commit()
     return jsonify({"message": "Tournament successfully created."})
 
 
