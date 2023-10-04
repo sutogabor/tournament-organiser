@@ -67,7 +67,7 @@ def delete_tournament_by_id(tournament_id):
 
 @routes_bp.route("/tournament/<int:tournament_id>", methods=['GET'])
 def get_tournament_by_id(tournament_id):
-    tournament = models.db.session.query(models.Tournament).get(tournament_id)
+    tournament = db.session.query(Tournament).get(tournament_id)
     if not tournament:
         return jsonify({"message": "Tournament not found."}), 404
     tournament_data = {
