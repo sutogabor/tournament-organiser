@@ -1,6 +1,7 @@
 import math
 from datetime import datetime
-from models import Player, Match
+from api.models.match import Match
+from api.models.player import Player
 
 mock_player_list = [
     {
