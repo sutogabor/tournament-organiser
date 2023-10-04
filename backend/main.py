@@ -1,14 +1,14 @@
 from flask import Flask
-from database_config import db_name
-from routes import routes_bp
-from models import db
+from api.database.database_config import url_object
+from api.routes import routes_bp
+from api.database.database_handler import init_db
 
 
 def create_app():
     app = Flask(__name__)
-    app.config['SQLALCHEMY_DATABASE_URI'] = db_name
+    app.config['SQLALCHEMY_DATABASE_URI'] = url_object
     app.register_blueprint(routes_bp)
-    db.init_app(app)
+    init_db(app)
     return app
 
 
@@ -19,4 +19,3 @@ if __name__ == "__main__":
         debug=True,
         host='localhost'
     )
-
