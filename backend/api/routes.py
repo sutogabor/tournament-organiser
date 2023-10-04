@@ -1,7 +1,8 @@
 from flask import jsonify, request, Blueprint
-from sqlalchemy.orm import joinedload
-import models
-from models import Tournament
+from api.models.match import Match
+from api.models.player import Player
+from api.models.tournament import Tournament
+from api.database.database_handler import db
 
 
 routes_bp = Blueprint("routes", __name__)
