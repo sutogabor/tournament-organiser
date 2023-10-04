@@ -99,14 +99,14 @@ def add_player():
     return jsonify({"message": "Player successfully added."})
 
 
-@routes_bp.route("/player/<int:player_id>", methods=['DELETE'])
+@routes_bp.route("/players/<int:player_id>", methods=['DELETE'])
 def delete_player_by_id(player_id):
-    player = models.db.session.query(models.Player).get(player_id)
+    player = Player.query.get(player_id)
     if not player:
         return jsonify({"message": "Player not found."}), 404
-    models.db.session.delete(player)
-    models.db.session.commit()
-    return jsonify({"message": "Event deleted successfully."})
+    db.session.delete(player)
+    db.session.commit()
+    return jsonify({"message": "Player deleted successfully."})
 
 
 @routes_bp.route("/player/<int:player_id>", methods=['GET'])
