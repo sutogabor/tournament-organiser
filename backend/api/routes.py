@@ -57,11 +57,11 @@ def add_tournament():
 
 @routes_bp.route("/tournament/<int:tournament_id>", methods=['DELETE'])
 def delete_tournament_by_id(tournament_id):
-    tournament = models.db.session.query(models.Tournament).get(tournament_id)
+    tournament = db.session.query(Tournament).get(tournament_id)
     if not tournament:
         return jsonify({"message": "Event not found."}), 404
-    models.db.session.delete(tournament)
-    models.db.session.commit()
+    db.session.delete(tournament)
+    db.session.commit()
     return jsonify({"message": "Tournament deleted successfully."})
 
 
