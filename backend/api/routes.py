@@ -134,14 +134,14 @@ def get_matches():
 
 @routes_bp.route("/matches/<int:match_id>", methods=['GET'])
 def get_match_by_id(match_id):
-    match = models.Match.query.get(match_id)
+    match = Match.query.get(match_id)
     if not match:
         return jsonify({"message": "Match not found."}), 404
     match_data = {
         "id": match.id,
-        "player_1_id": match.player_1_id,
-        "player_2_id": match.player_2_id,
-        "event_id": match.event_id,
+        "player_1_id": match.participants[0].id if match.participants and len(match.participants) >= 1 else None,
+        "player_2_id": match.participants[1].id if match.participants and len(match.participants) >= 2 else None,
+        "event_id": match.tournament_id,
         "winner_id": match.winner_id
     }
     return jsonify(match_data)
