@@ -4,8 +4,8 @@ from api.models.player import Player
 from api.models.tournament import Tournament
 from api.database.database_handler import db
 
+routes_bp = Blueprint("controller", __name__)
 
-routes_bp = Blueprint("routes", __name__)
 
 @routes_bp.route("/tournaments", methods=['GET'])
 def get_tournaments():
