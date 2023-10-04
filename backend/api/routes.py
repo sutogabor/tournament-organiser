@@ -109,9 +109,9 @@ def delete_player_by_id(player_id):
     return jsonify({"message": "Player deleted successfully."})
 
 
-@routes_bp.route("/player/<int:player_id>", methods=['GET'])
+@routes_bp.route("/players/<int:player_id>", methods=['GET'])
 def get_player_by_id(player_id):
-    player = models.db.session.query(models.Player).get(player_id)
+    player = Player.query.get(player_id)
     if not player:
         return jsonify({"message": "Player not found."}), 404
     player_data = {
